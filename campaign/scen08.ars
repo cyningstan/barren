@@ -1,0 +1,221 @@
+#
+# Barren Planet
+# A turn-based strategy game.
+#
+# Copyright (C) Damian Gareth Walker, 2022.
+# Created: 17-May-2022.
+#
+# Campaign to test First Landing scenario #8
+#
+
+# Campaign name
+name Scenario 8 Test
+
+# ----------------------------------------------------------------------
+# Unit Types
+#
+
+# Combat droid
+unittype Combat Droid
+cost 8
+hits 4
+power 2
+range 1
+armour 0
+moves 2
+
+# Hoverbug
+unittype Hoverbug
+cost 8
+hits 3
+power 2
+range 1
+armour 1
+moves 3
+
+# Ground Rover
+unittype Ground Rover
+cost 16
+hits 4
+power 2
+range 1
+armour 2
+moves 4
+
+# Air Fighter
+unittype Air Fighter
+cost 8
+hits 2
+power 2
+range 2
+armour 0
+moves 6
+
+# Laser Tank
+unittype Laser Tank
+cost 22
+hits 6
+power 4
+range 2
+armour 2
+moves 4
+
+# Laser Cannon
+unittype Laser Cannon
+cost 28
+hits 4
+power 6
+range 3
+armour 1
+moves 4
+
+# Gun Platform
+unittype Gun Platform
+cost 36
+hits 3
+power 8
+range 4
+armour 0
+moves 1
+
+# Mining Base
+unittype Mining Base
+cost 56
+hits 8
+power 2
+range 2
+armour 2
+moves 2
+build Combat Droid
+build Hoverbug
+build Ground Rover
+build Air Fighter
+build Laser Tank
+build Laser Cannon
+
+# What gathers resources?
+gatherer Mining Base
+
+# ----------------------------------------------------------------------
+# Terrain types
+#
+
+# Open Ground
+terrain Open Ground
+map .
+moves 1 Combat Droid
+moves 1 Hoverbug
+moves 1 Ground Rover
+moves 1 Air Fighter
+moves 1 Laser Tank
+moves 1 Laser Cannon
+
+# Rocks
+terrain Rocks
+map :
+moves 1 Combat Droid
+moves 1 Hoverbug
+moves 2 Ground Rover
+moves 1 Air Fighter
+moves 2 Laser Tank
+moves 4 Laser Cannon
+defence 2 Combat Droid
+defence 1 Hoverbug
+defence 1 Ground Rover
+defence 1 Laser Tank
+defence 1 Laser Cannon
+defence 1 Gun Platform
+
+# Ridge
+terrain Ridge
+map -
+moves 2 Combat Droid
+moves 1 Hoverbug
+moves 2 Ground Rover
+moves 1 Air Fighter
+moves 2 Laser Tank
+moves 4 Laser Cannon
+defence 2 Combat Droid
+defence 1 Hoverbug
+defence 1 Ground Rover
+defence 1 Laser Tank
+defence 1 Laser Cannon
+defence 2 Gun Platform
+
+# Cliff Face
+terrain Cliff Face
+map |
+moves 2 Hoverbug
+moves 1 Air Fighter
+
+# Magma Flow
+terrain Magma Flow
+map ~
+moves 1 Hoverbug
+moves 1 Air Fighter
+
+# Volcano
+terrain Volcano
+map ^
+
+# Crystal Node
+terrain Crystal Node
+map *
+moves 1 Combat Droid
+moves 1 Hoverbug
+moves 2 Ground Rover
+moves 1 Air Fighter
+moves 4 Laser Tank
+moves 4 Laser Cannon
+defence 1 Combat Droid
+
+# Alien Ruin
+terrain Alien Ruin
+map ?
+moves 1 Combat Droid
+moves 2 Hoverbug
+moves 4 Ground Rover
+moves 1 Air Fighter
+defence 3 Combat Droid
+defence 1 Hoverbug
+defence 1 Ground Rover
+defence 1 Mining Base
+
+# What produces resources?
+resource Crystal Node
+
+# ----------------------------------------------------------------------
+# Scenario 7
+#
+
+# Scenario ID
+scenario 1
+#scenario 7
+
+# Scenario Briefings
+briefing Nuvutech Our heavy units have been delivered to Dapra now and are ready for deployment. The Board of Directors are assured that these will help to turn the tide against Avuscorp so that our operations here will become profitable. You are instructed to use these units to overrun Avuscorp's latest mining installation and destroy all of their defensive units. Have caution, however: sources tell us that their mining base has the facilities to build hoverbugs, as well as the combat droids we have already seen.
+briefing Avuscorp We've set up a mining base in the highlands and it's already built up a bunch of resources. Of course Nuvutech are poking their noses in here. They've got some Laser Tanks of their own and they think they're going to take our resources away from us. You've still got plenty of light units to see them off. We've also improved the Mining Base so it can now produce Hoverbugs as well as Combat Droids. The boss thinks you've done well recently so don't ruin your streak of success by quaking at a few heavy tanks.
+
+# Victory for Nuvutech
+victory Nuvutech Flibble
+defeat Avuscorp Flibble
+#next Nuvutech 10
+
+# Victory for Avuscorp
+victory Avuscorp Flibble
+defeat Nuvutech Flibble
+#next Avuscorp 11
+
+# The Map
+map 16 16 ................................................................................................................................................................................................................................................................
+
+# Unit Placements
+Unit 0 0 Nuvutech Combat Droid
+Unit 15 15 Avuscorp Combat Droid
+
+# Units that can be built
+build Combat Droid
+build Hoverbug
+
+# Starting Resources
+resources Avuscorp 60

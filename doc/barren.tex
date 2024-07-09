@@ -1,0 +1,80 @@
+%
+% Barren Planet - User Manual
+% Main document source
+%
+% Copyright (C) Damian Gareth Walker 2020
+% Created: 27-Dec-2020
+%
+
+%
+% Preliminaries
+%
+\documentclass{book}
+\usepackage{geometry}
+\geometry{a5paper}
+\usepackage{graphicx}
+\usepackage[font={small,it}]{caption}
+\usepackage{multirow}
+\usepackage{adjustbox}
+
+% Document Properties and Settings
+%\author{Damian~Gareth~Walker}
+\title{Barren Planet}
+\date{Manual}
+\raggedbottom
+
+% Title fonts
+% LaTeX can't find any new fonts, even when I install the relevant
+% .otf files into the same directories where its existing .otf files
+% live. So I'll give up on having the manual look as I want it for
+% now.
+% --- Attempt with the font I actually wanted
+%\usepackage{fontspec}
+%\usepackage{addfont}
+%\usepackage{sectsty}
+%\addfont{OT1}{QTRobotic2000}{\qtrobotic}
+%\allsectionsfont{\qtrobotic}
+% --- Attempt with another font
+%\usepackage{sectsty}
+%\usepackage{addfont}
+%\addfont{OT1}{necker}{\necker}
+%\allsectionsfont{\necker}
+
+% Helvetica main font
+\usepackage[scaled]{helvet}
+\renewcommand\familydefault{\sfdefault} 
+\usepackage[T1]{fontenc}
+
+%
+% The Document Proper
+%
+
+% Beginning of Document and First Pages
+\begin{document}
+\maketitle
+\null
+\vfill
+\noindent \copyright{} Damian Gareth Walker 2023.  All rights reserved.
+\tableofcontents
+
+% Chapters input from other documents
+\input{introduction}
+\input{starting}
+\input{yourturn}
+\input{victory}
+\input{repair}
+\input{opponents}
+\input{campaigns}
+\input{appendices}
+\input{acknowledgements}
+
+% Remove the following once I've raided them for text
+%\input{battle}
+%\input{report}
+%\input{victory}
+%\input{game}
+
+% Final Pages and End of Document
+\thispagestyle{empty}
+\mbox{}
+\end{document}

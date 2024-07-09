@@ -1,0 +1,49 @@
+CAMPAIGN DESIGN: ICE CAPS
+
+
+Setting
+
+Crystal node deposits have been discovered in Dapra's polar ice cap. Icy conditions require a whole different set of units to the arid terrain of the rest of the planet. This has reignited the war between Nuvutech and Avuscorp, both of whom have developed units suitable to the terrain.
+
+
+Unit Types
+
+Combat Droid - as per First Landing, but fitted with skis for mobility.
+Hoverbug - the First Landing unit is capable of operating in all terrain.
+Snowmobile - a faster light unit equivalent to the Ground Rover.
+Air Fighter - the First Landing unit is capable of operating in all terrain.
+Ice Tank - a tracked heavy unit equivalent to the Laser Tank.
+Constructor - a mobile construction vehicle.
+Gun Platform - the First Landing unit is capable of operating in all terrain.
+Mining Station - a static platform for mining only (no construction).
+
+
+Terrain Types
+
+Snow Plain - flat snowy terrain.
+Crevasse - impassable deep trench.
+Ice Lake - frozen lake allowing faster than usual travel for some units.
+Rocks - as per First Landing, but rocks poke out of the snow.
+Ridge - a snowy version of the ridge fro First Landing.
+Magma Flow - as per First Landing, with a buffer of exposed rock.
+Alien Ruin - as per First Landing, but covered in snow.
+Crystal Node - as per First Landing, but jutting out of the snow.
+
+
+The Campaign Map
+
+                                +---+   +---+   +---+
+                              +-| 8 |N--| 11|N--| 14|N->
+                              | +---+   +---+   +---+
+        +---+   +---+   +---+N+   A    /  A    /  A
+      +-| 2 |N--| 4 |N--| 6 |     |   /   |   /   |
+      | +---+   +---+   +---+A+   |  N    |  N    |
++---+N+      A /     A /      | +---+   +---+   +---+N->
+| 1 |         X       X       +-| 9 |   | 12|   | 15|
++---+A+      N \     N \      | +---+   +---+   +---+A->
+      | +---+   +---+   +---+N+   |  A    |  A    |
+      +-| 3 |A--| 5 |A--| 7 |     |   \   |   \   |
+        +---+   +---+   +---+A+   N    \  N    \  N
+                              | +---+   +---+   +---+
+                              +-| 10|A--| 13|A--| 16|A->
+                                +---+   +---+   +---+

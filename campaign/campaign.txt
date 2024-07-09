@@ -1,0 +1,80 @@
+CAMPAIGN DESIGN
+
+
+The Campaign Map
+
+			+---+           +---+           +---+
+		      +-| 4 |N----+   +-| 9 |N----+   +-| 14|N->
+		      | +---+     |   | +---+     |   | +---+
+		+---+N+   A     +---+N+   A     +---+N+   A
+	      --| 2 |     |   +-| 7 |     |   +-| 12|     |
+	      |	+---+A+   |   | +---+A+   |   | +---+A+   |
+	+---+N+	      | +---+N+       | +---+N+       | +---+N->
+	| 1 |	      +-| 5 |         +-| 10|         +-| 15|
+	+---+A+	      | +---+A+       | +---+A+       | +---+A->
+	      |	+---+N+   |   | +---+N+   |   | +---+N+   |
+	      +-| 3 |     |   +-| 8 |     |   +-| 13|     |
+		+---+A+   N     +---+A+   N     +---+A+   N
+		      | +---+     |   | +---+     |   | +---+
+		      +-| 6 |A----+   +-| 11|A----+   +-| 16|A->
+			+---+           +---+           +---+
+	Main key: 1..16 scenario, victory for N Nuvutech or A Avuscorp
+
+	Terrain map:
+			4 .-^~		9 .-:*^		14 .^~*
+		2 .:^*		7 .-^*		12 .-:#^
+	1 .-:~*		5 .:^|		10 .-~*		15 .#*|^
+		3 .:|*		8 .-|*		13 .-:#|
+			6 .-|~		11 .-:*|	16 .|~*
+
+	Terrain key:
+	. Open		- Ridge		: Rocks		~ Magma Flow
+	| Cliff		^ Volcano	* Crystal Node	# Alien Ruin.
+
+
+Scenario List
+
+	Scen	Bld/Rep	Nuvutech units	resrc	Avuscorp units	resrc
+	 1	-	2R 4H 8D	-	4F 4H 8D 	-
+	 2	R:Nu	B 10D		16+2	4F 6H 10D	-
+	 3	R:Av	2R 6H 10D	-	B 10D 		16+2
+	 4	B:Nu	B 4H 4D		32	4F 5H 6D	-
+	 5	-	3T 4R		-	2T 4F 4H 4D	-
+	 6	B:Av	2R 4H 7D	-	B 4H 4D		32
+	 7	B:Nu	B 3R 5D		60+2	5T   		-	
+	 8	B:Av	5T   		-	B 3F 5D		60+2
+	 9	B:Nu	B 1C 3T		32+2	7T		-
+	10	B:Nu/Av	B		48+2	B		48+2
+	11	B:Av	7T		-	B 1C 3T		32+2
+	12	B:Nu	B 2G 3H 3D	128	2C 4T 4F	-
+	13	B:Av	2C 4T 2R	-	B 2G 2H 4D	128
+	14	B:Nu/Av	2B R 2H 2D	64+4	B 2T 4F 2H 2D	96+2
+	15	B:Nu/Av	2B 2G 4T 6D	128+4	2B 2G 3C 2H 4D	128+4
+	16	B:Nu/Av	B 2T 2R 2H 2D	96+2	2B 2F 2H 2D	64+4
+
+	Build List:
+			4 D		9  DHRF		14 DHRFTC
+		2 -		7 DH		12 DHRFT
+	1 -		5 -		10 DHRF		15 DHRFTC
+		3 -		8 DH		13 DHRFT
+			6 D		11 DHRF		16 DHRFTC
+
+	Unit key:
+	D Combat Droid	H Hoverbug	R Ground Rover	F Air Fighter
+	T Laser Tank	C Laser Cannon	G Gun Platform, B Mining Base
+
+
+General Remarks
+
+	The reward for winning a scenario is new toys, not an easier
+	time. When the winning player is given new toys to play with,
+	the losing player is given a balancing force of older units. So
+	there is still the urge to win, because toys. But every scenario
+	still gives each player an even chance of victory.
+
+	No scenario that lacks building should provide both players with
+	a mining base. To do so would risk both players ending in a
+	stalemate where each player has only their mining base. They
+	would have no means to attack one another. Only scenarios with
+	building enabled, where both players have a steady income,
+	should give mining base(s) to both sides.

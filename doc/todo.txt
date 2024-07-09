@@ -1,0 +1,5 @@
+TO DO LIST
+
+Preparing for Waterworld DLC:
+- Play-test the bug-fixed AI on First Landing.
+- Update the version number on the title screen to 1.02

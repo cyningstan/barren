@@ -1,0 +1,233 @@
+#
+# Barren Planet
+# A turn-based strategy game.
+#
+# Copyright (C) Damian Gareth Walker, 2022.
+# Created: 17-May-2022.
+#
+# Campaign to test First Landing scenario #8
+#
+
+# Campaign name
+name Scenario 9 Test
+
+# ----------------------------------------------------------------------
+# Unit Types
+#
+
+# Combat droid
+unittype Combat Droid
+cost 8
+hits 4
+power 2
+range 1
+armour 0
+moves 2
+
+# Hoverbug
+unittype Hoverbug
+cost 8
+hits 3
+power 2
+range 1
+armour 1
+moves 3
+
+# Ground Rover
+unittype Ground Rover
+cost 16
+hits 4
+power 2
+range 1
+armour 2
+moves 4
+
+# Air Fighter
+unittype Air Fighter
+cost 8
+hits 2
+power 2
+range 2
+armour 0
+moves 6
+
+# Laser Tank
+unittype Laser Tank
+cost 22
+hits 6
+power 4
+range 2
+armour 2
+moves 4
+
+# Laser Cannon
+unittype Laser Cannon
+cost 28
+hits 4
+power 6
+range 3
+armour 1
+moves 4
+
+# Gun Platform
+unittype Gun Platform
+cost 36
+hits 3
+power 8
+range 4
+armour 0
+moves 1
+
+# Mining Base
+unittype Mining Base
+cost 56
+hits 8
+power 2
+range 2
+armour 2
+moves 2
+build Combat Droid
+build Hoverbug
+build Ground Rover
+build Air Fighter
+build Laser Tank
+build Laser Cannon
+
+# What gathers resources?
+gatherer Mining Base
+
+# ----------------------------------------------------------------------
+# Terrain types
+#
+
+# Open Ground
+terrain Open Ground
+map .
+moves 1 Combat Droid
+moves 1 Hoverbug
+moves 1 Ground Rover
+moves 1 Air Fighter
+moves 1 Laser Tank
+moves 1 Laser Cannon
+
+# Rocks
+terrain Rocks
+map :
+moves 1 Combat Droid
+moves 1 Hoverbug
+moves 2 Ground Rover
+moves 1 Air Fighter
+moves 2 Laser Tank
+moves 4 Laser Cannon
+defence 2 Combat Droid
+defence 1 Hoverbug
+defence 1 Ground Rover
+defence 1 Laser Tank
+defence 1 Laser Cannon
+defence 1 Gun Platform
+
+# Ridge
+terrain Ridge
+map -
+moves 2 Combat Droid
+moves 1 Hoverbug
+moves 2 Ground Rover
+moves 1 Air Fighter
+moves 2 Laser Tank
+moves 4 Laser Cannon
+defence 2 Combat Droid
+defence 1 Hoverbug
+defence 1 Ground Rover
+defence 1 Laser Tank
+defence 1 Laser Cannon
+defence 2 Gun Platform
+
+# Cliff Face
+terrain Cliff Face
+map |
+moves 2 Hoverbug
+moves 1 Air Fighter
+
+# Magma Flow
+terrain Magma Flow
+map ~
+moves 1 Hoverbug
+moves 1 Air Fighter
+
+# Volcano
+terrain Volcano
+map ^
+
+# Crystal Node
+terrain Crystal Node
+map *
+moves 1 Combat Droid
+moves 1 Hoverbug
+moves 2 Ground Rover
+moves 1 Air Fighter
+moves 4 Laser Tank
+moves 4 Laser Cannon
+defence 1 Combat Droid
+
+# Alien Ruin
+terrain Alien Ruin
+map ?
+moves 1 Combat Droid
+moves 2 Hoverbug
+moves 4 Ground Rover
+moves 1 Air Fighter
+defence 3 Combat Droid
+defence 1 Hoverbug
+defence 1 Ground Rover
+defence 1 Mining Base
+
+# What produces resources?
+resource Crystal Node
+
+# ----------------------------------------------------------------------
+# Scenario 9
+#
+
+# Scenario ID
+scenario 1
+#scenario 9
+
+# Scenario Briefings
+briefing Nuvutech The board has consented to sign off on a new unit, the Laser Cannon. It has greater range and firepower than the Laser Tank, but is more vulnerable and needs protection. For this reason we have recalled some Laser Tanks to escort it. And not a moment too soon, for Avuscorp have brought more Laser Tanks to the planet. Your task is to use these units to protect our latest Mining Base. The Mining Base has facilities to build more light units too.
+briefing Avuscorp The Laser Tanks you were promised are now on the planet. Nuvutech have set up another Mining Base, so you'll have to use these Laser Tanks to smash through any defensive forces they have and destroy the Mining Base. The boss is still annoyed at your repeated failures, so you'd better put these Laser Tanks to good use. We've sunk enough resources into this blasted planet and we want to get our own hands on its resources before Nuvutech take them all!
+
+# Victory for Nuvutech
+victory Nuvutech Well done, commander! Our hold on the planet is assured now, and the board expect little more resistance from Avuscorp. You can look forward to a healthy bonus in the near future. We must remain vigilant, however, as Avuscorp still have forces on Dapra that might cause us difficulty as we extract resources from the planet. Another Mining Base is under construction: please stand by as we will need to defend it once its operations begin.
+defeat Avuscorp You incompetent fool! You've just about handed Nuvutech control of this planet now. They have Mining Bases set up across half the planet. There'll only be scraps left by the time we get to exploit it. You're whining about Laser Cannon? Alright, we'll send you Laser Cannon. Just make sure you don't waste those when they get there. The boss is preparing to have you hunted down, but if you can deliver a victory then she may well change her mind.
+#next Nuvutech 12
+
+# Victory for Avuscorp
+defeat Nuvutech Your record is blemished, commander. We had nearly secured the resources of Dapra for ourselves, but your loss has thrown the Board's plans into disarray. Having lost this Mining Base, we will now have to move our surveys elsewhere on the planet, in the hope of avoiding Avuscorp's forces. Once we have established another Mining Base we will be in contact with you to formulate a strategy for its defence. Please stand by for further instructions.
+victory Avuscorp Well done! It looks like your luck is turning. Now that you've given Nuvutech's forces a beating, we can turn our attention to establishing a Mining Base of our own to suck up this planet's resources. We're surveying promising areas now. Once we've found a site for our next Mining Base, we'll be in touch so you can defend it from any Nuvutech interference. Things are looking up now, and I hope your luck holds: for your sake as well as ours.
+#next Avuscorp 10
+
+# The Map
+map 15 17 ..................--.............--...........:..............:::....---......::...--.--..........-...-.......^..--.--....*..^...---........^^.......:......^.......:..................::..^.........:::.^^..::.....::..^...::........^^............^^..........
+
+# The units
+unit 1 8 Nuvutech Mining Base
+unit 1 9 Nuvutech Laser Cannon
+unit 2 7 Nuvutech Laser Tank
+unit 2 8 Nuvutech Laser Tank
+unit 2 9 Nuvutech Laser Tank
+unit 11 12 Avuscorp Laser Tank
+unit 11 14 Avuscorp Laser Tank
+unit 12 11 Avuscorp Laser Tank
+unit 12 13 Avuscorp Laser Tank
+unit 12 15 Avuscorp Laser Tank
+unit 13 12 Avuscorp Laser Tank
+unit 13 14 Avuscorp Laser Tank
+
+# Starting Resources
+resources Nuvutech 32
+
+# Units we can build
+build Combat Droid
+build Hoverbug
+build Ground Rover
+build Air Fighter

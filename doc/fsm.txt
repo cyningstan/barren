@@ -1,0 +1,137 @@
+FINITE STATE MACHINE
+State Transitions
+
+
+The FSM is currently a mess. This file describes how the state transitions should work. These decisions should no longer be made by game->turn(). Instead, game->turn() should merely process the game turn details, and leave the states themselves to decide what state should come next.
+
+Some new variables will need to be added to the game/turn objects for the states to be able to make these descisions. Namely:
+- briefing acknowledged - array for both players.
+- debriefing acknowledged - array for both players.
+
+
+Description
+  Key
+    Top Level Headings - current state
+    "User input" - selection from menu
+    (condition) - conditional execution
+    -> do a thing - what to do on input and/or condition
+  Only menu options leading to another state are described
+  Processing is not described
+
+
+States
+
+New Game
+  "Start game"
+    (load game) -> go to [loaded state]
+    (new game)
+      (human starts) -> go to Briefing
+      (computer starts) -> go to Computer Turn
+      (pbm starts) -> go to PBM Turn
+  "Exit game" -> quit
+
+Briefing
+  (briefing already acknowledged) -> go to Report
+  "Proceed" -> go to Report
+  "New game" -> go to New Game
+  "Exit game" -> quit
+
+Report
+  (no report) -> go to Player Turn
+  "Done"
+    (scenario ended) -> go to Debriefing
+    (scenario ongoing) -> go to Player Turn
+  "New game" -> go to New Game
+  "Exit game" -> quit
+
+Player Turn
+  "Done turn"
+    (human opponent) -> go to Briefing
+    (computer opponent) -> go to Computer Turn
+    (pbm opponent) go to PBM Turn
+  "New game" -> go to New Game
+  "Exit game" -> go to Exit Game
+
+Debriefing
+  "Acknowledge"
+    (more reports) -> go to Briefing
+    (final victory)
+      (opponent has seen debriefing) -> go to Game Over
+      (opponent has not seen debriefing) -> go to Debriefing
+    (next scenario)
+      (human opponent) -> go to Briefing
+      (computer opponent) -> go to Computer Turn
+      (pbm opponent) -> go to PBM Turn
+
+Computer Turn
+  "Proceed" -> go to Briefing
+  "New game" -> go to New Game
+  "Exit game" -> quit
+
+PBM Turn
+  "Proceed" -> go to Report
+  "New game" -> go to New Game
+  "Exit game" -> quit
+
+End Game
+  "New game" -> go to New Game
+  "Exit game" -> quit
+
+
+Conditions
+
+(load game)
+  An existing game has been loaded in the New Game state.
+  [loaded state] is the state loaded from the game file.
+
+(new game)
+  A new game has been started in the New Game state.
+
+(human starts)
+  The first player to move is a human player
+
+(computer starts)
+  The first player to move is a computer player
+
+(pbm starts)
+  The first player to move is a PBM player
+
+(briefing already acknowledged)
+  This player has acknowledged the briefing and need not see it again.
+
+(no report)
+  There is no report, or
+  there is a report, but it is empty.
+
+(scenario ended)
+  One player or other has achieved victory
+
+(scenario ongoing)
+  Neither player has yet achieved victory
+
+(human opponent)
+  The opponent is a human player
+
+(computer opponent)
+  The opponent is a computer player
+
+(pbm opponent)
+  The opponent is a PBM player
+
+(more reports)
+  The opponent won the previous scenario,
+  and took the first turn of the next scenario,
+  meaning there's a briefing and second report to view.
+
+(final victory)
+  There are no more scenarios to play in the campaign
+
+(opponent has seen debriefing)
+  The opponent has already seen the debriefing,
+  or is a computer player who doesn't care.
+
+(opponent has not seen debriefing)
+  The opponent has not yet seen the debriefing
+
+(next scenario)
+  There is another scenario to play in the campaign

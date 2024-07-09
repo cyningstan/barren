@@ -1,0 +1,246 @@
+#
+# Barren Planet
+# A turn-based strategy game.
+#
+# Copyright (C) Damian Gareth Walker, 2022.
+# Created: 1i-May-2022.
+#
+# Campaign to test First Landing scenario #2
+#
+
+# Campaign name
+name Scenario 2 Test
+
+# ----------------------------------------------------------------------
+# Unit Types
+#
+
+# Combat droid
+unittype Combat Droid
+cost 8
+hits 4
+power 2
+range 1
+armour 0
+moves 2
+
+# Hoverbug
+unittype Hoverbug
+cost 8
+hits 3
+power 2
+range 1
+armour 1
+moves 3
+
+# Ground Rover
+unittype Ground Rover
+cost 16
+hits 4
+power 2
+range 1
+armour 2
+moves 4
+
+# Air Fighter
+unittype Air Fighter
+cost 8
+hits 2
+power 2
+range 2
+armour 0
+moves 6
+
+# Laser Tank
+unittype Laser Tank
+cost 22
+hits 6
+power 4
+range 2
+armour 2
+moves 4
+
+# Laser Cannon
+unittype Laser Cannon
+cost 28
+hits 4
+power 6
+range 3
+armour 1
+moves 4
+
+# Gun Platform
+unittype Gun Platform
+cost 36
+hits 3
+power 8
+range 4
+armour 0
+moves 1
+
+# Mining Base
+unittype Mining Base
+cost 56
+hits 8
+power 2
+range 2
+armour 2
+moves 2
+build Combat Droid
+build Hoverbug
+build Ground Rover
+build Air Fighter
+build Laser Tank
+build Laser Cannon
+
+# What gathers resources?
+gatherer Mining Base
+
+# ----------------------------------------------------------------------
+# Terrain types
+#
+
+# Open Ground
+terrain Open Ground
+map .
+moves 1 Combat Droid
+moves 1 Hoverbug
+moves 1 Ground Rover
+moves 1 Air Fighter
+moves 1 Laser Tank
+moves 1 Laser Cannon
+
+# Rocks
+terrain Rocks
+map :
+moves 1 Combat Droid
+moves 1 Hoverbug
+moves 2 Ground Rover
+moves 1 Air Fighter
+moves 2 Laser Tank
+moves 4 Laser Cannon
+defence 2 Combat Droid
+defence 1 Hoverbug
+defence 1 Ground Rover
+defence 1 Laser Tank
+defence 1 Laser Cannon
+defence 1 Gun Platform
+
+# Ridge
+terrain Ridge
+map -
+moves 2 Combat Droid
+moves 1 Hoverbug
+moves 2 Ground Rover
+moves 1 Air Fighter
+moves 2 Laser Tank
+moves 4 Laser Cannon
+defence 2 Combat Droid
+defence 1 Hoverbug
+defence 1 Ground Rover
+defence 1 Laser Tank
+defence 1 Laser Cannon
+defence 2 Gun Platform
+
+# Cliff Face
+terrain Cliff Face
+map |
+moves 2 Hoverbug
+moves 1 Air Fighter
+
+# Magma Flow
+terrain Magma Flow
+map ~
+moves 1 Hoverbug
+moves 1 Air Fighter
+
+# Volcano
+terrain Volcano
+map ^
+
+# Crystal Node
+terrain Crystal Node
+map *
+moves 1 Combat Droid
+moves 1 Hoverbug
+moves 2 Ground Rover
+moves 1 Air Fighter
+moves 4 Laser Tank
+moves 4 Laser Cannon
+defence 1 Combat Droid
+
+# Alien Ruin
+terrain Alien Ruin
+map ?
+moves 1 Combat Droid
+moves 2 Hoverbug
+moves 4 Ground Rover
+moves 1 Air Fighter
+defence 3 Combat Droid
+defence 1 Hoverbug
+defence 1 Ground Rover
+defence 1 Mining Base
+
+# What produces resources?
+resource Crystal Node
+
+# ----------------------------------------------------------------------
+# Scenario 2
+#
+
+# Scenario ID
+scenario 1
+#scenario 2
+
+# Scenario Briefings
+briefing Nuvutech Having exploited the initial landing site, we have expanded into a nearby volcanic plain where there is another promising crystal node. Our mining operation is set up and we have already gathered some resources. But now Avuscorp is making another attempt to disrupt our operations. We have ten Combat Droids, which Avuscorp are attacking with a larger force. But our Mining Base has facilities to repair the droids when necessary, and this you should use to your advantage. Your task is to destroy the attacking forces.
+briefing Avuscorp Nuvutech thinks they've beaten us off the planet but they've another think coming. They've fortified the initial landing site and we can't attack it till our heavy units arrive. But they're expanding into a volcanic plain, and the boss thinks that the newer site should be easier pickings. If you want to get back in her good books, maybe you can take out their newest base before they can build up their defences. Their base can repair damaged combat droids, so you need to take them out quickly. Make sure you don't mess up this time!
+
+# Victory for Nuvutech
+victory Nuvutech Thank you commander, your performance has been exemplary. The directors are hoping that Avuscorp will give up their interference on the planet now and leave us to conduct our operations without molestation.  Just in case, though, we will continue to maintain a force on the planet while we expand our operations. There are a number of promising volcanic plains, and we will be surveying them in due course. Enjoy your paid leave, but please remain in communication so that we can call upon your services again in the event of any trouble.
+defeat Avuscorp Useless dolt! How could you fail at this? You had twice the number of units that Nuvutech did and you let them get annihilated! The boss wants to put you in front of those Nuvutech Combat Droids on your own and let them finish you off! Fortunately for you, she didn't take well to the guy who was going to replace you, and had him disposed of. So you've got a reprieve. Once we get more units onto the planet we can make another assault on Nuvutech's settlements. Let's hope for your sake that the boss hasn't found your replacement by then.
+#next Nuvutech 4
+
+# Victory for Avuscorp
+victory Avuscorp At last, you're showing us what you're made of! The boss is willing to give you another chance. It wasn't a difficult job, though, so you're not out of the woods yet. She wants to see more progress before she decides whether you're really up to the job. Now you've bought us a bit of time, we can get some better units onto the planet to drive Nuvutech off. While we're doing that you'd better brush up on your military skills so your winning streak continues. I wouldn't want to be you if things go wrong again.
+defeat Nuvutech Your performance was somewhat substandard, commander. The Board have discussed this matter at their recent meeting and have come to a decision. In light of your earlier successes they have opted to retain your services for the time being, but you are under warning. Our facilities require robust protection, and as our strategist you are expected to effectively manage the forces put at your disposal for that purpose. The Board will monitor your performance of these duties closely in the coming months. Stand by for further orders.
+#next Avuscorp 5
+
+# The Map
+map 17 15 ........................^...............^^^...............^...:::.............::...............:...........^^...........:...^^...........:::.....^^........*::...^^^^.......:::....^^.......::.....................^...............^^^.............^^^.........
+
+# Unit Placements
+unit 2 9 Nuvutech Mining Base
+unit 2 1 Nuvutech Combat Droid
+unit 2 2 Nuvutech Combat Droid
+unit 2 3 Nuvutech Combat Droid
+unit 3 8 Nuvutech Combat Droid
+unit 3 9 Nuvutech Combat Droid
+unit 3 10 Nuvutech Combat Droid
+unit 2 12 Nuvutech Combat Droid
+unit 2 13 Nuvutech Combat Droid
+unit 2 14 Nuvutech Combat Droid
+unit 13 1 Avuscorp Combat Droid
+unit 13 2 Avuscorp Combat Droid
+unit 13 3 Avuscorp Combat Droid
+unit 15 1 Avuscorp Hoverbug
+unit 15 2 Avuscorp Hoverbug
+unit 15 3 Avuscorp Hoverbug
+unit 13 5 Avuscorp Combat Droid
+unit 13 6 Avuscorp Combat Droid
+unit 13 7 Avuscorp Combat Droid
+unit 13 8 Avuscorp Combat Droid
+unit 15 5 Avuscorp Air Fighter
+unit 15 6 Avuscorp Air Fighter
+unit 15 7 Avuscorp Air Fighter
+unit 15 8 Avuscorp Air Fighter
+unit 13 10 Avuscorp Combat Droid
+unit 13 11 Avuscorp Combat Droid
+unit 13 12 Avuscorp Combat Droid
+unit 15 10 Avuscorp Hoverbug
+unit 15 11 Avuscorp Hoverbug
+unit 15 12 Avuscorp Hoverbug
+
+# Resources
+resources Nuvutech 48
+

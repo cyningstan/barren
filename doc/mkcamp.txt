@@ -1,0 +1,148 @@
+BARREN PLANET - CAMPAIGN BUILDER UTILITY
+
+
+Introduction
+
+	The utility 'mkcamp' allows the developer or selected third
+	party to build a Barren Planet campaign file from a text file
+	and an associated graphics set.
+
+Invocation
+
+	Run the utility with the 'mkcamp' command followed by the name
+	of the input/output files, without extension. So 'mkcamp
+	campaign' will take the text file campaign.cmi and the graphics
+	file campaign.pic, and create an output file campaign.cam which
+	will be recognised by the game.
+
+The Text Input File
+
+	The text input file is a series of lines, each line being either
+	blank, a comment beginning with #, or a command and its
+	parameters. The commands are as follows:
+
+	name NAME - set the campaign name.
+
+	player N NAME - set the corporation name of player N (1 or 2)
+	to the given name (which must be 1 to 8 characters without
+	spaces).
+
+	human PLAYER - force this campaign to be single-player, with
+	the named player being controlled by a human, the opponent
+	being the computer.
+
+	unittype NAME - begin the definition of a new unit type.
+
+	cost COST - set the build cost of the current unit type.
+
+	hits HITS - set the maximum hit points of the current unit type.
+
+	power POWER - set the power of the current unit type.
+
+	range RANGE - set the range of the current unit type.
+
+	armour ARMOUR - set the armour points of the current unit type.
+
+	moves MOVES - set the movement points of the current unit type.
+
+	build NAME - allow this unit type to build/repair the named
+	type.
+
+	terrain NAME - begin the definition of a new terrain type.
+
+	map CHAR - sets the character used to define this terrain type
+	for 'map' commands in the scenario definition.
+
+	defence DEF NAME - set the defence value of this terrain to a
+	particular unit type. This acts as an armour bonus.
+
+	moves MOVES NAME - set the movement cost of this terrain for a
+	particular unit type. Set to 0 to make the square inaccessible
+	to the unit. Set to a number greater than the unit's movement
+	points to allow the unit to be built on that terrain but not
+	move to it, e.g. to define the terrain a static unit can be
+	built on.
+
+	scenario SCENARIO - begin the definition of a numbered
+	scenario. SCENARIO=1 defines the first scenario of the campaign.
+
+	briefing PLAYER TEXT - set the briefing text for the named
+	player.
+
+	victory PLAYER TEXT - set the victory debriefing text for the
+	named player.
+
+	defeat PLAYER TEXT - set the defeat debriefing text for the
+	named player.
+
+	next PLAYER SCENARIO - sets the next scenario to be played when
+	the named player achieves victory. Omit or set to 0 if a victory
+	for that player wins the campaign.
+
+	resources PLAYER RESOURCES - sets the scenario's starting
+	resources for a particular player.
+
+	map WIDTH HEIGHT TERRAIN - defines the map for the
+	scenario. WIDTH and HEIGHT are the dimensions of the map, while
+	TERRAIN is a series of characters defined by the 'map' commands
+	in previous terrain definitions.
+
+	build NAME - allow a unit type to be built in this scenario.
+
+	unit X Y PLAYER TYPE - add a unit of the named type, belonging
+	to the named player, at X Y.
+
+	point X Y - set a victory point on the map.
+
+	gatherer NAME - set the unit type that gathers resources. One
+	such unit type is allowed per campaign.
+
+	resource NAME - set the terrain that generates resources. One
+	such terrain type is allowed per campaign.
+
+	In the long text commands (briefing, victory, defeat), a line
+	break can be forced with the backslash (\) character. Long lines
+	are automatically wrapped to fit the size of the window (32
+	characters).
+
+The Graphics Input File
+
+	The graphics are saved on a 320x200x2bpp image in BSAVE format
+	compatible with CGALIB. This kind of file can be exported by the
+	DOS PCPAINT program when painting in 4-colour CGA mode.
+
+	The file is organised in rows of tiles. Each row contains the
+	tiles for one unit type and one terrain type. Therefore up to
+	12 unit types and 12 terrain types are supported in a campaign
+	by this utility. But the game itself supports only 8 unit
+	types and 8 terrain types.
+
+	The leftmost 64 pixels of each row are a unit graphic, made up
+	of four tiles: the player 1 unit, the player 1 AND mask, the
+	player 2 unit, and the player 2 AND mask.
+
+	The rightmost 256 pixels of each row are a terrain graphic,
+	made up of 16 tiles numbered 0-15. Tiles 1, 3, 5..15 are those
+	connecting to similar terrain to the east. Tiles 2-3, 6-7,
+	10-11 and 14-15 are those connecting to similar terrain to the
+	south. Tiles 4-7 and 12-15 are those connecting to similar
+	terrain to the west. Tiles 8-15 are those connecting to
+	similar terrain to the north. Alternatively the tile number
+	can be thought of as an addition of the following numbers: 1
+	for east, 2 for south, 4 for west and 8 for north.
+
+	When the game constructs battlefield maps, tiles at any edge
+	of the map are drawn as if they connect to similar terrain
+	beyond. This allows, for example, lava flows to appear to flow
+	beyond the edge of the map.
+
+	Below the rows of unit and terrain graphics are the corporate
+	logos: player 1's logo at coordinates 0,128 and player 2's
+	logo at 32,128. The logos are 32x24 pixels each. They should
+	not contain the company name, as this will be printed just
+	beneath them in the game.
+
+	Palette information is fixed in the game. Assuming neither the
+	-m nor -p switches are given on the game's command line, colour
+	0 will be dark grey, 1 will be light cyan, 2 will be light red,
+	and 3 will be white.

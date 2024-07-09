@@ -1,0 +1,249 @@
+#
+# Barren Planet
+# A turn-based strategy game.
+#
+# Copyright (C) Damian Gareth Walker, 2021.
+# Created: 15-Jan-2021.
+#
+# Testbed for First Landing Scenario 14
+#
+
+# Campaign name
+name scenario 15 Test
+
+# ----------------------------------------------------------------------
+# Unit Types
+#
+
+# Combat droid
+unittype Combat Droid
+cost 8
+hits 4
+power 2
+range 1
+armour 0
+moves 2
+
+# Hoverbug
+unittype Hoverbug
+cost 8
+hits 3
+power 2
+range 1
+armour 1
+moves 3
+
+# Ground Rover
+unittype Ground Rover
+cost 16
+hits 4
+power 2
+range 1
+armour 2
+moves 4
+
+# Air Fighter
+unittype Air Fighter
+cost 8
+hits 2
+power 2
+range 2
+armour 0
+moves 6
+
+# Laser Tank
+unittype Laser Tank
+cost 22
+hits 6
+power 4
+range 2
+armour 2
+moves 4
+
+# Laser Cannon
+unittype Laser Cannon
+cost 28
+hits 4
+power 6
+range 3
+armour 1
+moves 4
+
+# Gun Platform
+unittype Gun Platform
+cost 36
+hits 3
+power 8
+range 4
+armour 0
+moves 1
+
+# Mining Base
+unittype Mining Base
+cost 56
+hits 8
+power 2
+range 2
+armour 2
+moves 2
+build Combat Droid
+build Hoverbug
+build Ground Rover
+build Air Fighter
+build Laser Tank
+build Laser Cannon
+
+# What gathers resources?
+gatherer Mining Base
+
+# ----------------------------------------------------------------------
+# Terrain types
+#
+
+# Open Ground
+terrain Open Ground
+map .
+moves 1 Combat Droid
+moves 1 Hoverbug
+moves 1 Ground Rover
+moves 1 Air Fighter
+moves 1 Laser Tank
+moves 1 Laser Cannon
+
+# Rocks
+terrain Rocks
+map :
+moves 1 Combat Droid
+moves 1 Hoverbug
+moves 2 Ground Rover
+moves 1 Air Fighter
+moves 2 Laser Tank
+moves 4 Laser Cannon
+defence 2 Combat Droid
+defence 1 Hoverbug
+defence 1 Ground Rover
+defence 1 Laser Tank
+defence 1 Laser Cannon
+defence 1 Gun Platform
+
+# Ridge
+terrain Ridge
+map -
+moves 2 Combat Droid
+moves 1 Hoverbug
+moves 2 Ground Rover
+moves 1 Air Fighter
+moves 2 Laser Tank
+moves 4 Laser Cannon
+defence 2 Combat Droid
+defence 1 Hoverbug
+defence 1 Ground Rover
+defence 1 Laser Tank
+defence 1 Laser Cannon
+defence 2 Gun Platform
+
+# Cliff Face
+terrain Cliff Face
+map |
+moves 2 Hoverbug
+moves 1 Air Fighter
+
+# Magma Flow
+terrain Magma Flow
+map ~
+moves 1 Hoverbug
+moves 1 Air Fighter
+
+# Volcano
+terrain Volcano
+map ^
+
+# Crystal Node
+terrain Crystal Node
+map *
+moves 1 Combat Droid
+moves 1 Hoverbug
+moves 2 Ground Rover
+moves 1 Air Fighter
+moves 4 Laser Tank
+moves 4 Laser Cannon
+defence 1 Combat Droid
+
+# Alien Ruin
+terrain Alien Ruin
+map ?
+moves 1 Combat Droid
+moves 2 Hoverbug
+moves 4 Ground Rover
+moves 1 Air Fighter
+defence 3 Combat Droid
+defence 1 Hoverbug
+defence 1 Ground Rover
+defence 1 Mining Base
+
+# What produces resources?
+resource Crystal Node
+
+# ----------------------------------------------------------------------
+# Scenario #15
+#
+
+# Scenario ID
+scenario 1
+#scenario 15
+
+# Scenario briefings
+briefing Nuvutech Placeholder briefing
+briefing Avuscorp Placeholder briefing
+
+# Victory for Nuvutech
+victory Nuvutech You won! (Placeholder debriefing)
+defeat Avuscorp You lost! (Placeholder debriefing)
+
+# Victory for Avuscorp
+defeat Nuvutech You lost! (Placeholder debriefing)
+victory Avuscorp You won! (Placeholder debriefing)
+
+# The map
+map 19 13 ....^^...............*.^^...........|.................||..*.^..?...??....|.....^.????.??....|..^.^^..?............^.....?.???.?..............???.?....|..^....?.....?..|||.......??.??....|.....^^.....??..|...*...^^........||.*...............|......
+
+# Unit placements
+unit 2 1 Nuvutech Mining Base
+unit 1 3 Nuvutech Mining Base
+unit 3 0 Nuvutech Gun Platform
+unit 2 4 Nuvutech Gun Platform
+unit 0 0 Nuvutech Laser Tank
+unit 1 0 Nuvutech Laser Tank
+unit 0 1 Nuvutech Laser Tank
+unit 0 2 Nuvutech Laser Tank
+unit 2 6 Nuvutech Combat Droid
+unit 3 6 Nuvutech Combat Droid
+unit 2 7 Nuvutech Combat Droid
+unit 3 7 Nuvutech Combat Droid
+unit 2 8 Nuvutech Combat Droid
+unit 3 8 Nuvutech Combat Droid
+unit 17 10 Avuscorp Mining Base
+unit 15 11 Avuscorp Mining Base
+unit 16 9 Avuscorp Gun Platform
+unit 13 12 Avuscorp Gun Platform
+unit 16 12 Avuscorp Laser Cannon
+unit 17 12 Avuscorp Laser Cannon
+unit 18 12 Avuscorp Laser Cannon
+unit 17 4 Avuscorp Hoverbug
+unit 18 7 Avuscorp Hoverbug
+unit 17 5 Avuscorp Combat Droid
+unit 18 5 Avuscorp Combat Droid
+unit 17 6 Avuscorp Combat Droid
+unit 18 6 Avuscorp Combat Droid
+
+# Resources
+resources Nuvutech 128
+resources Avuscorp 128
+
+# Building
+build Combat Droid
+build Hoverbug
+build Air Fighter
+build Ground Rover
+build Laser Tank
+build Laser Cannon

@@ -1,0 +1,422 @@
+COMPUTER PLAYER ALGORITHM
+
+Requirements: the AI will where possible:
+  attack enemy units;
+  mine resources;
+  occupy victory points;
+  repair damaged friendly units;
+  defend static non-combatant units;
+  build units to effect the above.
+
+Categorisation data consists of:
+  combatant flag yes/no
+  builder flag yes/no
+  gatherer flag yes/no
+  mobility flag mobile/static
+
+Target data consists of:
+  map location,
+  importance,
+  type, one of:
+    attack, (units should approach and attack)
+    gathering, (units should gather resources)
+    occupation, (units should occupy)
+    repair, (units should approach and repair)
+    seek repair, (damaged units should rally here)
+    defence, (units should approach and defend)
+    build; (a unit should be built)
+  preferred unit types, (what to allocate or build)
+  allocation percentage/proportion. (have we satisfied requirements?)
+
+Agent data consists of:
+  unit ID
+  suitablility
+  allocated for building action yes/no
+
+
+Detailed Pseudocode Sections
+
+Set up the AI routine:
+  Call categorise unit types routine
+  Call calculate centre routine for friendly force
+  Call calculate centre routine for enemy force
+
+Take a turn routine:
+  Call determine targets routine
+  Call allocation units routine
+  Call take action routine
+
+; Level 1 routines
+
+Calculate centre routine for force:
+  For each unit in force:
+    Add position to aggregate
+  Calculate centre for force from aggregate and force count
+
+Categorise unit types routine:
+  For each unit type:
+    If unit can mine:
+      Set unit type's gatherer flag
+    If unit can build:
+      Set unit type's builder flag
+    If unit type can fire
+      and unit type is not a gatherer
+      and unit type is not a builder:
+      Set unit type's combatant flag
+    If unit type can move
+      Set unit type's mobile flag
+  If there are no combatants:
+    For each unit type:
+      If unit type can fire:
+        Set unit type's combatant flag
+
+Determine targets routine:
+  For each map square,
+    If an enemy unit:
+      Call target attack on unit routine
+    If a resource:
+      Call target gathering on square routine
+    If a victory point:
+      Call target occupation on square routine
+    If a damaged friendly unit:
+      Call target repair on square routine
+    If a friendly repair unit:
+      Call target seek repair on square routine
+    If a friendly static non-combatant:
+      Call target defence on nearby square routine
+  Sort targets by descending importance
+
+Allocation units routine:
+  Find all potential agents
+  For each target in order of importance:
+    If attack target:
+      Call allocate/build units on attack target routine
+    Else if gathering target:
+      Call allocate/build units on gathering target routine
+    Else if victory point target:
+      Call allocate/build units on victory point target routine
+    Else if repair target:
+      Call allocate/build units on repair target routine
+    Else if seek repair target:
+      Call allocate units on seek repair target routine
+    Else if defence target:
+      Call allocate/build units on defence target routine
+
+Take action routine:
+  For each allocated agent:
+    If agent has attack target and is building:
+      Call calculate construction unit type routine
+      Call calculate build positions in range of target routine
+      Attempt to move to build position 2
+      Attempt to build unit in build position 1
+    Else If unit has attack target and is not building:
+      If agent is mobile and not in range of target:
+	Call calculate attack position routine
+	Attempt to move to attack position
+      Fire upon target
+    Else if agent has gathering target and is building:
+      Call calculate construction unit type routine
+      Call calculate build position on target routine
+      Attempt to move to build position
+      Attempt to build unit on target square
+    Else if unit has gathering target and is not building:
+      Move to gathering position
+    Else if agent has victory point target and is building:
+      Call calculate construction unit type routine
+      Call calculate build position on target routine
+      Attempt to move to build position
+      Attempt to build unit on target square
+    Else if agent has victory point target and is not building:
+      Move to victory point position
+    Else if agent has repair target and is building:
+      Call calculate construction unit type routine
+      Call calculate build positions adjacent to target routine
+      Attempt to move to build position 2
+      Attempt to build unit on build position 1
+    Else if agent has repair target and is not building:
+      If agent is mobile and not adjacent to target:
+	Call calculate repair position routine
+	Attempt to move to repair position
+      Repair target
+    Else if agent has seek repair target:
+      If agent is mobile and not adjacent to target:
+	Call calculate seek repair position routine
+	Move to seek repair position
+    Else if agent has defence target and is building:
+      Call calculate construction unit type routine
+      Call calculate build positions in defence range of target routine
+      Attempt to move to build position 2
+      Attempt to build unit on build position 1
+    Else if agent has defence target and is not building:
+      If agent is mobile and not in range of target:
+	Call calculate defence position routine
+	Move to defence position
+      Call find most important enemy within range routine
+      Fire upon chosen enemy unit
+  For each unit with movement points remaining:
+    If unit is builder,
+      Call repair any adjacent damaged unit routine
+    If unit is combatant
+      Call find most important enemy within range routine
+      Fire upon chosen enemy unit
+
+; Level 2 routines
+
+Target attack on unit routine:
+  Create new target
+  Set target's type to attack
+  Set target's position on unit
+  Set target's importance according to:
+    distance from centre of enemy force
+    unit's build capability
+    unit's gatherer capability
+  Set target's preferred types to
+    all buildable mobile unit types with power
+    sorted by firepower
+  Set target's requirements according to unit's firepower
+
+Target gathering on square routine:
+  Create new target
+  Set target's type to gathering
+  Set target's position to square
+  Set target's importance according to:
+    distance from centre of friendly force
+  Set target's preferred types to gatherer
+
+Target occupation on square routine:
+  Create new target
+  Set target's type to occupation
+  Set target's position to square
+  Set target's importance according to:
+    distance from centre of friendly force
+  Set target's preferred types to
+    all buildable unit types with power
+    sorted by firepower
+  Set target's requirements according to unit's firepower
+
+Target repair on square routine:
+  Create new target
+  Set target's type to repair
+  Set target's position on unit
+  Set target's importance according to:
+    unit's health
+    unit's firepower
+    distance from centre of friendly force
+    static unit check
+  Set target's preferred unit types to builders, mobile first
+
+Target seek repair on square routine:
+  Create new target
+  Set target's type to seek repair
+  Set target's position on unit
+  Set target's importance according to:
+    distance from centre of enemy force
+  Set target's requirements according to 2 units
+
+Target defence on nearby square routine:
+  Create new target
+  Set target's type to defend
+  Set target's position on unit
+  Set target's importance according to:
+    distance from centre of enemy force
+  Set target's preferred types to
+    all buildable unit types with power
+    sorted by firepower
+  Set target's requirements according to:
+    average firepower of enemy units
+    proximity of those units to the target
+
+Allocate/build units on attack target routine:
+  For each potential friendly agent:
+    Calculate suitability according to
+      agent firepower or ability to build combatants (required)
+      proximity to target for mobile units
+      in-range bonus for static units
+  Rank agents according to suitability
+  For each agent in order of suitability:
+    Allocate friendly unit to target
+    If target requirements satisfied:
+      Done allocating to this target
+
+Allocate/build units on gathering target routine:
+  For each potential friendly agent:
+    Calculate suitability according to
+      ability to gather or to build a unit that does (required)
+      resource points available for builders
+      proximity to target
+        for builders and mobile gatherers
+      presence at the target for static gatherers
+    Rank agents according to suitability
+    If there are suitable agents,
+      Allocate the most suitable agent from the list
+
+Allocate/build units on victory point target routine:
+  For each potential friendly agent:
+    Calculate suitability according to
+      ability to move onto the terrain or to build a unit that can
+      resource points available for builders
+      proximity to target
+        for mobile units and builders
+      presence at the target for static combatants
+    Rank agents according to suitability
+    If there are suitable agents,
+      Allocate the most suitable agent from the list
+
+Allocate/build units on repair target routine:
+  For each potential friendly agent:
+    Calculate suitability according to
+      ability to repair (required)
+      proximity to target for mobile agents
+      adjacence to target for static agents
+    Rank agents according to suitability
+    If there are suitable agents,
+      Allocate the most suitable agent from the list
+
+Allocate units on seek repair target routine:
+  For each potential friendly agent:
+    Calculate suitability according to
+      damage (required)
+      ability to move (also required)
+      proximity to target for mobile units
+      adjacence to target bonus
+  For each agent in order of suitability:
+    Allocate friendly unit to target
+    If target requirements satisfied:
+      Done allocating to this target
+
+Allocate/build units on defence target routine:
+  For each potential friendly agent:
+    Calculate suitability according to
+      agent firepower or ability to build combatants (required)
+      resource points available for builders
+      proximity to target for mobile units
+      in-range bonus for static units
+  Rank agents according to suitability
+  For each agent in order of suitability:
+    Allocate friendly unit to target
+    If target requirements satisfied:
+      Done allocating to this target
+
+Calculate construction unit type routine:
+  For each unit type in target's preferred unit type list:
+    If we can afford this unit type,
+      and this agent can build it:
+      Choose this unit type
+
+Calculate build positions in range of target routine:
+  For each square within unit-to-be-constructed's range of target:
+    Calculate suitability according to:
+      distance from target
+      protection provided
+      proximity to agent
+  Rank squares according to suitability
+  Choose the most suitable square to build on
+  For each square adjacent to most suitable square to build on:
+    Calculate suitablility according to:
+      protection provided
+      proximity to agent
+  Rank squares according to suitability
+  Choose the most suitable square to build from
+
+Calculate build position on target routine:
+  For each square adjacent to the target square:
+    Calculate suitablility according to:
+      protection provided
+      proximity to agent
+  Rank squares according to suitability
+  Choose the most suitable square to build from
+
+Calculate build positions adjacent to target routine
+  For each square adjacent to target:
+    Calculate suitability according to:
+      distance from target
+      protection provided
+      proximity to agent
+  Rank squares according to suitability
+  Choose the most suitable square to build on
+  For each square adjacent to most suitable square to build on:
+    Calculate suitablility according to:
+      protection provided
+      proximity to agent
+  Rank squares according to suitability
+  Choose the most suitable square to build from
+
+Calculate build positions in defence range of target routine:
+  For each square within unit-to-be-constructed's range of target:
+    Calculate suitability according to:
+      distance from target
+      protection provided
+      proximity to centre of enemy units
+  Rank squares according to suitability
+  Choose the most suitable square to build on
+  For each square adjacent to most suitable square to build on:
+    Calculate suitablility according to:
+      protection provided
+      proximity to agent
+  Rank squares according to suitability
+  Choose the most suitable square to build from
+
+Calculate attack position routine:
+  For each square within agent's range of target
+    Calculate suitability according to:
+      ability of agent to traverse that square (required)
+      distance from target
+      protection provided
+      proximity to agent
+  Rank squares according to suitability
+  Choose the most suitable square
+
+Calculate repair position routine:
+  For each square adjacent to the target
+    Calculate suitability according to:
+      ability of agent to traverse that square (required)
+      proximity to agent
+      protection provided
+
+Calculate seek repair position routine:
+  For each square adjacent to the target
+    Calculate suitability according to:
+      ability of agent to traverse that square (required)
+      proximity to agent
+      protection provided
+
+Calculate defence position routine:
+  For each square within agent's range of target
+    Calculate suitability according to:
+      ability of agent to traverse that square (required)
+      distance from target
+      protection provided
+      proximity to agent
+  Rank squares according to suitability
+  Choose the most suitable square
+
+Repair any adjacent damaged unit routine:
+  For each adjacent friendly repair target in order of importance:
+    If target is still damaged,
+      Repair target
+
+Find most important enemy within range routine:
+  For each enemy target in order or importance:
+    If target is within range,
+      Fire upon target
+
+
+Where to build - decision table
+
+	Mobile?
+Target	Builder	Built	Target	Build @
+-------	-------	-------	-------	-------
+-	-	Y	-	Adjacent to the builder towards the target
+Attack	-	N	-	Within range of the target
+Gather	-	N	-	On the target
+Occupy	-	N	-	On the target
+Repair	-	-	Y	Adjacent to the builder towards the target
+Repair	-	N	N	Adjacent to the target
+Defend	-	N	-	Within range of the target towards the enemy
+
+Algorithms:
+Within range of the target
+Adjacent to the builder towards the target
+On the target
+Adjacent to the target
+Within range of the target towards the enemy

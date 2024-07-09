@@ -1,0 +1,85 @@
+%
+% Barren Planet - User Manual
+% Main document source
+%
+% Copyright (C) Damian Gareth Walker 2022
+% Manual Sections: On the Battlefield
+%
+
+% Chapter Heading
+\chapter{On the Battlefield}
+
+\noindent
+The turn-based model of {\it Barren Planet} allows you to move all of your units and make your attacks during your turn, with immediate feedback on the outcome of your actions. So you can see how your initial attacks succeed and modify your plans if necessary during a single turn.
+
+% Section heading: Examining Units
+\section{Examining Units}
+
+\noindent
+The top left window is the map display, as with the Briefing screen. But the Battlefield screen gives you a cursor, which you can move around the map to highlight individual units and terrain.
+
+If you move the cursor onto one of your units and choose the {\it Select} option from the menu, a panel with your unit's stats will be brought up in the top right window of the screen.
+
+The top part of this panel shows your unit's icon, its type, and your corporation's name to tell you that the unit is yours. Underneath are the stats themselves. The boxes from left to right show: the unit's current and maximum hit points, its attack power, its attack range, its armour rating, and its current and maximum movement points.
+
+Hit points are the amount of damage a unit can take. When its current hit points are reduced to zero, the unit is destroyed. Therefore units with more hit points are more difficult for the enemy to destroy.
+
+Attack power is the maximum amount of damage a unit can inflict upon an enemy in a single attack. A high attack power allows this unit to take out enemies quickly.
+
+Attack range is the number of squares away that a unit can fire. Long range attack units can fire at enemies from a distance, safe from the return fire of enemies with a shorter attack range.
+
+Armour rating is the maximum amount of damage a unit can harmlessly absorb in a single attack. Damage absorbed by armour is not taken off hit points, so a heavily armed unit can take quite a beating even if it has a low number of hit points.
+
+Movement points influence how fast a unit can move across the battlefield. In open terrain it is generally the number of squares that a unit can move across in a single turn, while more difficult terrain may take more than one movement point per square.
+
+Selecting a friendly unit also prepares it to receive orders, so that you can move it, use it to attack a neaby enemy, or if it is capable, to instruct it to build or repair other nearby units.
+
+You can also examine enemy units by selecting them in the same way. The differences are that you are now shown the current hit point and movement point values for enemy units, only their maximum, and that obviously you cannot instruct enemy units to move, attack or perform any other action. When you select an enemy unit, the last friendly unit you selected will be the one that such orders are given to.
+
+Using the {\it Select} option on an empty terrain square instead brings up a panel of information about that terrain. The upper part of this panel shows the graphic and name of the terrain. The lower half contains three information boxes.
+
+The first box shows the current friendly unit selected, and indicates what unit type the other terrain stats refer to. If no unit has been selected, then this and the other statistics will be blank.
+
+The second box shows how many movement points it takes for the current unit to move over that terrain. If the unit cannot enter that terrain, it will be blank.
+
+The third box shows the protection that that terrain offers to the current unit. Only some terrain types provide protection for any units; if this terrain type offers the current unit no protection then this value will be blank.
+
+As with selecting enemy units, the last friendly unit selected remains the current one to which orders will be issued. Let's move on to how to order your units.
+
+% Section Header: Moving and Attacking
+\section{Moving and Attacking}
+
+\noindent
+To order your units to move, you first {\it Select} the unit that you want to move. Then you move the cursor to the square you want to move towards, and select the {\it Move} option from the menu. If the unit has movement points available, it will move towards the target square.
+
+If the target square is not adjacent to the unit, then the computer will compute the quickest path to the target square and move the unit as far as it can along that path. The path is not always straight; if difficult or impassable terrain or another unit lies in the way, then the unit will move around it.
+
+To order your unit to attack a unit that is within firing range, having selected it and possibly moved it first, move the cursor over the target unit and select {\it Attack}. You will see your unit flash and an explosion will appear on the target. If the target unit has an opportunity, it will fire back. A message will appear in the top right window, under the unit/terrain information panel, with the outcome of the attack. If one of the two units are destroyed, it will disappear from the map.
+
+A unit needs at least one movement point left in order to attack an enemy, and doing so will use up all remaining movement points. The enemy will need to be within its own firing range to return fire, and will also need to have at least one movement point remaining to do so. If it attacked or otherwise used up all its movement points in its own previous turn, it will not be able to return fire.
+
+% Section header: Building and Repair
+\section{Building and Repair}
+
+\noindent
+Some units are capable of building and repairing others. These abilities allow you to recover from having your units damaged or destroyed, but they also consume resources. Some battles are too frantic to allow for building new units on the battlefield, but may still give opportunities to repair.
+
+To repair a damaged unit, first select the unit that will be performing the repair. This needs to be adjacent to the unit it is repairing. Then you move the cursor over the damaged unit, and select {\it Repair} from the menu. If there are sufficient resources, then the damaged unit will be fully repaired and it can immediately join the battle.
+
+To build a new unit, first select the unit that will be doing the building. Then move the cursor to an empty adjacent square, and choose {\it Build}. A new panel will appear in the top right window, showing the units that can be built, one of which will be highlighted with a cursor. Moving the cursor left and right will allow other units to be highlighted. When the desired unit type is highlighted, select {\it Build} from the build menu. Assuming sufficient resources are available, the new unit will appear in the desired place.
+
+If you have the resources to build and repair, the amount you have will be reported in the top right window at the start of your turn. Each time you build or repair something, the updated resource figure will be reported along with the action you just took.
+
+At the start of each battle, each player will be allocated a number of resources. These are depleted by building and repair. They may be replenished during the course of a battle if the player has mining bases built on crystal nodes; each such mining base brings in a set amount of resources each turn. If a base is destroyed, then the amount of income is reduced.
+
+% Section header: Ending the Turn
+\section{Ending the Turn}
+
+\noindent
+Once you have moved all your units, attacked all the enemies you can, and built and repaired everything you can afford, it is time to end your turn. This is done with the {\it End Turn} option on the menu. What happens next depends upon who your opponent is.
+
+If your opponent is the computer, then you will see the Computer Turn page. The computer will consider its options and move its units under the same rules that you did. When the computer is finished, you will be taken to the Battle Report screen described in the next chapter.
+
+If your opponent is a PBM player, you will be instructed to send a turn file to them. When they have played their turn and returned their turn file to you, you can proceed to the Battle Report. Further information on play-by-mail games is given in the {\it PBM Games} section of the {\it Game Management} chapter.
+
+If your opponent is a human player, you will see the security screen telling you it is their turn. Now is the time to call them to the keyboard and leave them to take their turn. When they have done and it is your turn again, you will see the Security screen; proceeding from here will take you to the Battle Report.

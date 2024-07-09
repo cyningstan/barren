@@ -1,0 +1,249 @@
+#
+# Barren Planet
+# A turn-based strategy game.
+#
+# Copyright (C) Damian Gareth Walker, 2022.
+# Created: 1i-May-2022.
+#
+# Campaign to test First Landing scenario #1
+#
+
+# Campaign name
+name Scenario 1 Test
+
+# ----------------------------------------------------------------------
+# Unit Types
+#
+
+# Combat droid
+unittype Combat Droid
+cost 8
+hits 4
+power 2
+range 1
+armour 0
+moves 2
+
+# Hoverbug
+unittype Hoverbug
+cost 8
+hits 3
+power 2
+range 1
+armour 1
+moves 3
+
+# Ground Rover
+unittype Ground Rover
+cost 16
+hits 4
+power 2
+range 1
+armour 2
+moves 4
+
+# Air Fighter
+unittype Air Fighter
+cost 8
+hits 2
+power 2
+range 2
+armour 0
+moves 6
+
+# Laser Tank
+unittype Laser Tank
+cost 22
+hits 6
+power 4
+range 2
+armour 2
+moves 4
+
+# Laser Cannon
+unittype Laser Cannon
+cost 28
+hits 4
+power 6
+range 3
+armour 1
+moves 4
+
+# Gun Platform
+unittype Gun Platform
+cost 36
+hits 3
+power 8
+range 4
+armour 0
+moves 1
+
+# Mining Base
+unittype Mining Base
+cost 56
+hits 8
+power 2
+range 2
+armour 2
+moves 2
+build Combat Droid
+build Hoverbug
+build Ground Rover
+build Air Fighter
+build Laser Tank
+build Laser Cannon
+
+# What gathers resources?
+gatherer Mining Base
+
+# ----------------------------------------------------------------------
+# Terrain types
+#
+
+# Open Ground
+terrain Open Ground
+map .
+moves 1 Combat Droid
+moves 1 Hoverbug
+moves 1 Ground Rover
+moves 1 Air Fighter
+moves 1 Laser Tank
+moves 1 Laser Cannon
+
+# Rocks
+terrain Rocks
+map :
+moves 1 Combat Droid
+moves 1 Hoverbug
+moves 2 Ground Rover
+moves 1 Air Fighter
+moves 2 Laser Tank
+moves 4 Laser Cannon
+defence 2 Combat Droid
+defence 1 Hoverbug
+defence 1 Ground Rover
+defence 1 Laser Tank
+defence 1 Laser Cannon
+defence 1 Gun Platform
+
+# Ridge
+terrain Ridge
+map -
+moves 2 Combat Droid
+moves 1 Hoverbug
+moves 2 Ground Rover
+moves 1 Air Fighter
+moves 2 Laser Tank
+moves 4 Laser Cannon
+defence 2 Combat Droid
+defence 1 Hoverbug
+defence 1 Ground Rover
+defence 1 Laser Tank
+defence 1 Laser Cannon
+defence 2 Gun Platform
+
+# Cliff Face
+terrain Cliff Face
+map |
+moves 2 Hoverbug
+moves 1 Air Fighter
+
+# Magma Flow
+terrain Magma Flow
+map ~
+moves 1 Hoverbug
+moves 1 Air Fighter
+
+# Volcano
+terrain Volcano
+map ^
+
+# Crystal Node
+terrain Crystal Node
+map *
+moves 1 Combat Droid
+moves 1 Hoverbug
+moves 2 Ground Rover
+moves 1 Air Fighter
+moves 4 Laser Tank
+moves 4 Laser Cannon
+defence 1 Combat Droid
+
+# Alien Ruin
+terrain Alien Ruin
+map ?
+moves 1 Combat Droid
+moves 2 Hoverbug
+moves 4 Ground Rover
+moves 1 Air Fighter
+defence 3 Combat Droid
+defence 1 Hoverbug
+defence 1 Ground Rover
+defence 1 Mining Base
+
+# What produces resources?
+resource Crystal Node
+
+# ----------------------------------------------------------------------
+# Scenario #1
+#
+
+# Scenario ID
+scenario 1
+
+# Scenario briefings
+briefing Nuvutech You have been assigned to command our forces on Dapra, a promising mining planet. We have also seen some of Avuscorp's ships in the area, so there may be some resistance if they have also discovered the crystal nodes. We have landed an initial force of Combat Droids, Ground Rovers and Hoverbugs near some surface crystal nodes. Your first task is to secure these nodes and await the arrival of mining equipment. We are assured of your competence in this matter, and have further work for you when this task is complete.
+briefing Avuscorp Those thieving scoundrels at Nuvutech have their eyes on our newest mining world, Dapra! We must accelerate our efforts to set up on the planet before they get there, and blast them off the face of the planet if they give us any trouble. That's where you come in, commander. The boss likes your military record and thinks you might do better here than sat behind that desk of yours. First off, you need to seize the five crystal nodes at the landing site. We've given you a small force of light units to begin with; expect more later.
+
+# Victory for Nuvutech
+victory Nuvutech Well done, commander. With the landing site secured we are free to build our first mining bases in the area and extend our survey further around the planet. Avuscorp will probably continue to give us trouble, so stronger units are on the way to Dapra now. In the mean time, we have a head start and the resources we are gathering here will allow us to maintain our units on the planet instead of having to source all materials off-world. Please stand by for your next assignment.
+defeat Avuscorp What's the matter with you? Are your strategic skills getting a bit rusty after all that time in the office? You'd better brush up quickly, as the boss isn't impressed. Nuvutech have started to expand their hold on the planet. The landing site is pretty well defended now, so we're going to have to turn our attention elsewhere. And they know we're coming for them, so they're likely to beef up their forces further. We'll be back in touch when we've figured out what to do. Don't fail us again!
+#next Nuvutech 2
+
+# Victory for Avuscorp
+victory Avuscorp Great stuff! The boss is pleased with your progress. Nuvutech thought it would be so easy! Now the juiciest resources at the landing site our ours and we can start laying down mining bases. But our enemy won't give up that easily. Expect them to come at us with bigger guns next time. Let's be ready for them! More combat units are on their way, and we'll look for other areas of the planet to set up on so we can keep one step ahead of Nuvutech.
+defeat Nuvutech We are somewhat disappointed in you, commander. It was thought this simple assignment would not pose any difficulty for you. Avuscorp have seized the initiative and will likely increase their hold on Dapra if we do not increase our effectiveness now. They are fortifying the landing site as we speak, so we will have to consider how to halt their advance while we establish our own hold on the world. Stand by for more orders.
+#next Avuscorp 3
+
+# The map
+map 19 13 ......-.-..-..........*..--.---..............---........................*............:..................::................:*:.................:....................~...............~.~~............*..~~~.................~...*..............~.........
+
+# Unit placements
+unit 1 3 Nuvutech Ground Rover
+unit 2 3 Nuvutech Ground Rover
+unit 1 5 Nuvutech Hoverbug
+unit 2 5 Nuvutech Hoverbug
+unit 1 6 Nuvutech Hoverbug
+unit 2 6 Nuvutech Hoverbug
+unit 1 8 Nuvutech Combat Droid
+unit 2 8 Nuvutech Combat Droid
+unit 1 9 Nuvutech Combat Droid
+unit 2 9 Nuvutech Combat Droid
+unit 1 10 Nuvutech Combat Droid
+unit 2 10 Nuvutech Combat Droid
+unit 1 11 Nuvutech Combat Droid
+unit 2 11 Nuvutech Combat Droid
+unit 16 1 Avuscorp Air Fighter
+unit 16 2 Avuscorp Air Fighter
+unit 17 1 Avuscorp Air Fighter
+unit 17 2 Avuscorp Air Fighter
+unit 16 5 Avuscorp Combat Droid
+unit 17 5 Avuscorp Combat Droid
+unit 16 6 Avuscorp Combat Droid
+unit 17 6 Avuscorp Combat Droid
+unit 16 7 Avuscorp Combat Droid
+unit 17 7 Avuscorp Combat Droid
+unit 16 8 Avuscorp Combat Droid
+unit 17 8 Avuscorp Combat Droid
+unit 16 10 Avuscorp Hoverbug
+unit 17 10 Avuscorp Hoverbug
+unit 16 11 Avuscorp Hoverbug
+unit 17 11 Avuscorp Hoverbug
+
+# Victory point placements
+point 3 1
+point 5 10
+point 9 6
+point 15 3
+point 13 11
+

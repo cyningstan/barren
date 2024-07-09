@@ -1,0 +1,230 @@
+#
+# Barren Planet
+# A turn-based strategy game.
+#
+# Copyright (C) Damian Gareth Walker, 2021.
+# Created: 15-Jan-2021.
+#
+# Scenario 10 Testbed
+#
+
+# Campaign name
+name Scenario 10 Test
+
+# ----------------------------------------------------------------------
+# Unit Types
+#
+
+# Combat droid
+unittype Combat Droid
+cost 8
+hits 4
+power 2
+range 1
+armour 0
+moves 2
+
+# Hoverbug
+unittype Hoverbug
+cost 8
+hits 3
+power 2
+range 1
+armour 1
+moves 3
+
+# Ground Rover
+unittype Ground Rover
+cost 16
+hits 4
+power 2
+range 1
+armour 2
+moves 4
+
+# Air Fighter
+unittype Air Fighter
+cost 8
+hits 2
+power 2
+range 2
+armour 0
+moves 6
+
+# Laser Tank
+unittype Laser Tank
+cost 22
+hits 6
+power 4
+range 2
+armour 2
+moves 4
+
+# Laser Cannon
+unittype Laser Cannon
+cost 28
+hits 4
+power 6
+range 3
+armour 1
+moves 4
+
+# Gun Platform
+unittype Gun Platform
+cost 36
+hits 3
+power 8
+range 4
+armour 0
+moves 1
+
+# Mining Base
+unittype Mining Base
+cost 56
+hits 8
+power 2
+range 2
+armour 2
+moves 2
+build Combat Droid
+build Hoverbug
+build Ground Rover
+build Air Fighter
+build Laser Tank
+build Laser Cannon
+
+# What gathers resources?
+gatherer Mining Base
+
+# ----------------------------------------------------------------------
+# Terrain types
+#
+
+# Open Ground
+terrain Open Ground
+map .
+moves 1 Combat Droid
+moves 1 Hoverbug
+moves 1 Ground Rover
+moves 1 Air Fighter
+moves 1 Laser Tank
+moves 1 Laser Cannon
+
+# Rocks
+terrain Rocks
+map :
+moves 1 Combat Droid
+moves 1 Hoverbug
+moves 2 Ground Rover
+moves 1 Air Fighter
+moves 2 Laser Tank
+moves 4 Laser Cannon
+defence 2 Combat Droid
+defence 1 Hoverbug
+defence 1 Ground Rover
+defence 1 Laser Tank
+defence 1 Laser Cannon
+defence 1 Gun Platform
+
+# Ridge
+terrain Ridge
+map -
+moves 2 Combat Droid
+moves 1 Hoverbug
+moves 2 Ground Rover
+moves 1 Air Fighter
+moves 2 Laser Tank
+moves 4 Laser Cannon
+defence 2 Combat Droid
+defence 1 Hoverbug
+defence 1 Ground Rover
+defence 1 Laser Tank
+defence 1 Laser Cannon
+defence 2 Gun Platform
+
+# Cliff Face
+terrain Cliff Face
+map |
+moves 2 Hoverbug
+moves 1 Air Fighter
+
+# Magma Flow
+terrain Magma Flow
+map ~
+moves 1 Hoverbug
+moves 1 Air Fighter
+
+# Volcano
+terrain Volcano
+map ^
+
+# Crystal Node
+terrain Crystal Node
+map *
+moves 1 Combat Droid
+moves 1 Hoverbug
+moves 2 Ground Rover
+moves 1 Air Fighter
+moves 4 Laser Tank
+moves 4 Laser Cannon
+defence 1 Combat Droid
+
+# Alien Ruin
+terrain Alien Ruin
+map ?
+moves 1 Combat Droid
+moves 2 Hoverbug
+moves 4 Ground Rover
+moves 1 Air Fighter
+defence 3 Combat Droid
+defence 1 Hoverbug
+defence 1 Ground Rover
+defence 1 Mining Base
+
+# What produces resources?
+resource Crystal Node
+
+# ----------------------------------------------------------------------
+# Scenario 10
+#
+
+# Scenario ID
+#scenario 10
+scenario 1
+
+# Scenario Briefings
+briefing Nuvutech We have identified a rich area of resources on the magma plains, with several Crystal Nodes ready for exploit. But Avuscorp have also been surveying the area, which is cause for concern. We have set up a Mining Base in the area, but it appears that Avuscorp have done the same. Your task is to build up a force of light units to defend our Mining Base while attacking theirs. We cannot allow Avuscorp to establish a strategic location so close to ours.
+briefing Avuscorp We've found a magma plain rich in Crystal Node resources, and set up a Mining Base there. Our base is equipped to build light units. But Nuvutech have been nosing around there too, and they've done the same. We can't have them stealing resources from under our noses!  You'll have to build up a force of light units to defend our base, and at the same time attack their base and blow it off the face of the planet.
+
+# Victory for Nuvutech
+victory Nuvutech The board of directors approves of your performance in this mission. Our hold on the planet is almost assured now. Avuscorp's forces are almost completely wiped out and we should be free to exploit Dapra's resources with little or no resistance. Our surveys have returned to the volcanic plains where we believe the best resources are concentrated. Once we have another Mining Base set up there, we will contact you again to see to its defence.
+defeat Avuscorp This is a disaster! We're being beaten back and Nuvutech are getting to syphon off the best of the planet's resources. The boss isn't best pleased with what you've done here and she won't stand for your ineptitude much longer. We don't have the equipment for another Mining Base right now but there are some heavy units heading your way. Once they get there, you're to use them to harass Nuvutech's next attempt to set up mining operations. Stand by.
+#next Nuvutech 12
+
+# Victory for Avuscorp
+defeat Nuvutech With this latest defeat, our control of Dapra's resources is slipping away. The board of directors have issued a memorandum on your performance, and if there is no improvement then your position will become untenable. As our current resources are insufficient to begin new mining operations, you will be tasked with harassing Avuscorp's future attempts to exploit the planet until such time as we are able to resume our own growth once again. Stand by for further instructions.
+victory Avuscorp That was great! It looks like you're turning things around. We're beating Nuvutech back and now it'll be difficult for them to dominate the planet now. But you need to keep up the pressure. Our survey units have returned to the highlands where we'll establish another Mining Base and start extracting resources. When the Mining Base is ready we'll get you down there to make sure the remaining Nuvutech forces don't give us any trouble.
+#next Avuscorp 13
+
+# The map
+map 28 9 .....~.......-.*.-...........*...~.......--.--..~...........~~...-....---.~~~..~........~......--......~..~~.......~~~.....--.--...~~.~........~.~........--....~~~..........~.---.-.....-...~.............-*--.....-....~~...*........--.-...........~.....
+
+# Unit Placements
+unit 1 1 Nuvutech Mining Base
+unit 26 7 Avuscorp Mining Base
+
+# Victory point placements
+point 1 1
+point 8 7
+point 15 0
+point 26 7
+
+# Resources
+resources Nuvutech 48
+resources Avuscorp 48
+
+# Units that can be built
+build Combat Droid
+build Hoverbug
+build Ground Rover
+build Air Fighter

@@ -1,0 +1,255 @@
+MISCELLANEOUS DESIGN NOTES
+
+
+User Interface
+
+UI Screens
+- New Game Screen
+- Briefing Screen
+- Human Turn Screen
+- Computer Turn Screen
+- PBM Turn Screen
+- Debriefing Screen
+
+User Interface Progression for a Complete Game (one player)
+- New Game Screen
+- Until campaign won
+  - Briefing Screen
+  - While scenario not won:
+    - If side is Player,
+      - Player Turn Screen
+    - Else if side is Computer,
+      - Computer Turn Screen
+    - Else if side is PBM
+      - PBM Turn Screen
+    - Switch sides
+  - Debriefing Screen
+
+User Interface Progression for a Complete Game (two player)
+- New Game Screen
+- Until campaign won
+  - While scenario not won:
+    - If this player's turn 1:
+      - Briefing Screen
+    - Player Turn Screen
+    - Switch sides
+  - Debriefing Screen player 1
+  - Debriefing Screen player 2
+
+New Game User Interface (Changes)
+
+Add a means of choosing an old game to load
+- Add a "Game" line at the top.
+  - This shows the start date/time of the game.
+  - It shows "New game" for a new game.
+  - Left/right cycles around available games.
+  - Campaign and players are updated as player cycles through.
+- When an in-progress game is selected at the top,
+  - The campaign and players cannot be changed.
+  - The campaign and players should be shown in low-light font.
+  - The "Start game" menu option should say "Resume game".
+
+
+Player Turn User Interface
+
+Menu Commands
+- Cancel Menu
+- Select
+- Move
+- Attack
+- Build
+- Repair
+- View report
+- Done
+- New Game
+- Exit Game
+
+Cancel Menu:
+- Allows no action when menu accidentally selected.
+
+Select:
+- Changes the current unit.
+- Default option when:
+  - Cursor is on a friendly unit,
+  - And either:
+    - Current unit is not a builder,
+    - Cursor is not adjacent to the current unit.
+
+Move:
+- Orders the current unit to move to the destination
+- No attack - if an enemy unit is in the way, movement is blocked
+- Default option when:
+  - Cursor is on an empty space,
+  - And either:
+    - Current unit is not a builder,
+    - Cursor is not adjacent to current unit.
+
+Attack:
+- Orders the current unit to
+  - Advance towards an enemy till it is in firing range,
+  - Fire upon the enemy if in range.
+- Default option when cursor is on an enemy unit.
+
+Build:
+- Orders the current unit to build another unit on the destination square.
+- Default option when:
+  - Current unit is a builder,
+  - Cursor is on an adjacent empty space.
+- A modal dialogue will ask what unit type to build, with a submenu:
+  - Build,
+  - Cancel.
+
+Repair:
+- Orders the current unit to repair another unit on the destination square.
+- Default option when:
+  - Current unit is a builder,
+  - Cursor is on an adjacent friendly unit.
+
+View report:
+- Report on what took place during the opponent's turn.
+- Interactive display that:
+  - Allows the player to page back and forth through each battle,
+  - Highlights the source and target of the attack on the map,
+  - Displays unit stats and a brief message,
+  - Has its own submenu with:
+    - Cancel menu,
+    - Previous,
+    - Next (default option unless on the last battle),
+    - Done (default option when on the last battle).
+
+Done
+- Ends the turn
+
+New Game
+- Starts a new game
+
+Exit Game
+- Exits the game
+
+
+Report Screen
+
+This precedes the human turn screen and shows what the previous player
+was doing. It plays through the report slowly, showing every move,
+attack, build and repair action.
+
+The left hand window will show the map. When a new unit's actions are about to be shown, the map will be centred on that unit for a second. Then the actions it performs will be shown, approximately two per second.
+
+No stat boxes will be shown in the right hand window; only rolling messages. Attacks, repair and builds will show the same message as the enemy player would have seen on their turn. Simple square by square moves will not have a message shown.
+
+If the fire key is held during report playback, the menu (see below) will appear. Otherwise the report will play through to the end. When it ends, a message will invite the player to hold fire for the menu. The menu has the following options:
+- Cancel menu: close the menu without acting.
+- Replay: restart the report from the beginning.
+- Done: skip the rest of the report if it's playing; on to the turn.
+- New game: start a new game.
+- Exit game: save the game and exit to DOS.
+
+
+Improved Logic for Security Screen
+
+The security screen prevents one human player from accidentally accessing the other player's briefings, reports and turn. It should be shown only when both sides are controlled by local human players, not in human-vs-computer or human-vs-pbm modes.
+
+It should be displayed once when the first of those three screens appears for a player in a given turn. It should also be shown when one of those screens is the first to be presented when the program is loaded.
+
+Hence if a player sees all three of those screens, it should appear only for the briefing screen, not again for the report and/or turn screens. However, if a player saves during one of those screens, and reloads the game, the security screen should be shown again.
+
+For each of the screens the logic is:
+    If the security screen has been NOT shown this turn for this player,
+    And if the other player is also a local human player,
+        show it now,
+	then proceed to the proper screen.
+
+The existing logic that checks that this is not the first turn should no longer be needed - that logic was just there to prevent the screen being shown in a turn screen when it had just appeared during the briefing.
+
+A flag for whether the screen has been shown should not be saved; if the default value is 'no' then this ensures the screen is shown again when the program is loaded. The flag should not be part of the game object (which would imply that it ought to be saved), nor should it be part of a particular screen (which would preclude other screens accessing the flag).
+
+Instead the flag should be a 'static' variable in the UIScreen module, shared bewteen any UIScreen-derived object. There need not be external access to it. Instead the logic above can be applied within the startscreen() method.
+
+
+General UI Guidelines
+
+Use of text window and status bar, option 1:
+- Status bar for brief instruction, "Press FIRE for menu" etc.
+- Right hand screen for:
+  announcements (e.g. TURN REPORT, PLAYER TURN),
+  extended instructions,
+  report text.
+Use of text window and status bar, option 2:
+- Status bar for:
+  Screen name when idle,
+  Status when busy,
+  Explanation of menu option when in menu.
+
+
+Play-by-Mail Notes
+
+Conditions for determining if a PBM file is for a new game:
+- We are in the New Game screen.
+- A *.GAM file doesn't exist.
+- Scenario ID is 0 (1?).
+- Turn number is 0 (1?).
+- If these conditions are true:
+  a new game is generated from the turn;
+  the game is saved;
+  the turn file is deleted.
+Conditions for determining if a PBM file is a new turn on an existing game:
+- We are in the PBM turn screen.
+- The *.TRN file exists for the current game.
+- The turn's current side is this player.
+- The scenario numbers in the turn/game files match, AND:
+  the turn numbers match and the other player was first to move, OR
+  the turn's turn number is 1 more than the game's turn number
+    and this player was the first to move, OR
+  the turn number is 0 and
+    the scenario is one of the valid "next" scenarios.
+- If these conditions are true:
+  the game is cleared and re-imported from the turn;
+  the game is advanced to the next (local player's) turn;
+  the turn file is deleted.
+How to get the receiving player to show the debrief screen:
+- What the remote player needs:
+  last turn's battle state (initial)
+  report
+  last turn's scenario id <- get it from own game before processing turn
+  who won? <- cannot currently be ascertained in 100% of cases
+  this turn's battle state (battle)
+  this turn's scenario id
+What should we see if the remote player ended the battle?
+- Possibility #1
+  turn->scenario is one of game->scenario->next[] not game->scenario
+  the remote player has won/lost and passed to the next scenario
+  - we won if turn->scenario is game->scenario->next[us]
+  - they won if turn->scenario is game->scenario->next[them]
+  - we should go to report screen, then debriefing, then briefing, then human
+- Possibility #2
+  turn->scenario is game->scenario but game->scenario is won
+  the remote player has won/lost and complete victory is achieved
+  - we won if turn->scenario->next[them] is not end of game
+  - they won if turn->scenario->next[us] is not end of game
+  - if turn->scenario->next[both] is end of game,
+    we currently can't tell who won
+  - the only way we can relly ascertain in this case is
+    - replay the report from the initial state
+    - check the victory result
+  - but to do that we must perhaps:
+    pass through report,
+    remember *not* to go straight from there to human turn
+    currently the game does not do this
+- More planning is needed and a bit of restructuring?
+
+
+Paths from STATE_REPORT
+
+The scenario is in progress, nobody has won:
+- REPORT => HUMAN
+Remote player ended the scenario, we move first on the next scenario
+- REPORT => DEBRIEFING => BRIEFING => HUMAN
+Remote player ended the scenario, they moved first on the next scenario
+- REPORT => DEBRIEFING => BRIEFING => REPORT => HUMAN
+  The two reports are:
+  - The final turn of the previous scenario
+  - The initial turn of the next scenario
+  Current system is not remotely suited to storing this
+  - I would need to add a second report to the turn
+  - I would need to add a second report to the game
+  - This second report would be unused 95% of the time

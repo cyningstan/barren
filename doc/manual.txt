@@ -1,0 +1,54 @@
+MANUAL PLAN
+
+Format
+
+Latex PDF
+- Mainly text, some lists and tables
+- Occasional screenshot images
+- No icons (e.g. for unit section), don't over-tax LaTeX
+- A nice sci-fi heading font if we can
+- Normal serif font for the text body
+- Raytraced cover image, echoing the title screen
+- Manual will be written as if in the 1980s - no DOSBox/internet
+- A5 formats: for ebook viewing; for home printing; for publication
+
+
+Contents
+
+Table of Contents? if the manual is big enough.
+Introduction
+- A Description of the Game
+- Installing the Game
+- Starting the Game
+Starting a New Game
+- Controls
+- Choosing a campaign
+- Setting the players: human, computer, PBM
+The Mission Briefing
+- The Objective
+- Examining the map
+On the Battlefield
+- Examining units
+- Moving and attacking
+- Building and Repair
+- Ending the Turn
+The Battle Report
+Victory and Defeat
+- Battle Victory Conditions
+- Advancing the Campaign
+- The Final Battle
+Game Management
+- Saving games
+- Reloading a game
+- PBM games
+Appendices
+- Units (stats, and list)
+- Terrain (stats, and list)
+Index? if the manual is big enough.
+
+
+Notes
+
+The campaign should be written as if the unit and terrain types of this campaign are the only ones. It should not dwell on the fact that the unit types may change in different campaigns, and should be specific about crystal nodes as being the source of resources and the mining bases being the units that mine them, and that build other units.
+
+New campaigns will be released as expansions, with their own manuals, and can themselves detail what new units and terrain types exist and how to make use of them.

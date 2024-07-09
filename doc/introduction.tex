@@ -1,0 +1,95 @@
+%
+% Barren Planet - User Manual
+% Main document source
+%
+% Copyright (C) Damian Gareth Walker 2022
+% Manual Sections: Introduction
+%
+
+% Chapter Heading
+\chapter{Introduction}
+
+% A Description of the Game
+\noindent
+Dapra is a barren planet at the edge of settled space, surveyed only recently. The climate over most of the planet is arid and unpleasant. There is apparently no life on this world today, although ruins of a past civilisation remain. 
+
+But Dapra has a high concentration of valuable minerals that have attracted the attention of interstellar mining corporations. Two corporations in particular, Nuvutech and Avuscorp, are in a good position to move in and exploit the newly discovered resources.
+
+Nuvutech is an old company, mired in bureaucracy but with considerable financial power. They can afford to invest heavily both in mining infrastructure and in the military forces to preserve their investments. A mining colony on Dapra would be a profitable addition to their assets.
+
+Avuscorp is a newer corporation, more energetic and more unscrupulous. Their methods are not always civilised nor, as many suspect, always legal. There have been violent run-ins between Avuscorp and other corporations over lucrative resources, and it looks like another one is brewing between them and Nuvutech over Dapra.
+
+It remains to be seen which of these corporations will gain control over this planet and its resources.
+
+{\bf \it Barren Planet} is a {\it turn-based strategy} game. Players take on the role of a strategist, controlling a number of units that move around on a battle map, attacking their enemies in an attempt to control strategic locations or to wipe their opponents out altogether. A series of battles is linked together to form the full campaign, with the outcome of one battle determining what battle is fought next.
+
+The game can be played by one player or two. A single player can choose which corporation to work for, with the computer taking control of the opposing side. Two players can play in ``hotseat'' mode, taking turns at the same computer, or in ``PBM'' (play-by-mail) mode, sending game turns to one another using disks or electronic mail.
+
+% Section heading: Installing the Game
+\section{Installing the Game}
+
+\noindent
+The game runs on an IBM PC or compatible computer. It requires an 8088 processor or better, so it should run on anything from the original IBM PC to its faster clones. It supports CGA graphics and looks best when connected to an RGB colour or composite monochrome monitor. It requires 512k of memory.
+
+Before playing the game you must install it either to another floppy disk or to a hard disk. This is because the program saves your progress, and the original disk is write-protected so your games could not be saved there. 
+
+To create a floppy disk to play the game from, have a formatted disk ready. Put the original game disk in your floppy disk drive (it is assumed your drive is drive {\bf a:}) and type the following command:
+
+\begin{verbatim}
+A> diskcopy a: a:
+\end{verbatim}
+
+\noindent
+DOS will copy all the files from the original disk to your destination disk, prompting you to swap disks as and when necessary. If you want to copy the game to your hard disk drive, you should insert the original game disk into your floppy disk drive as before, but issue the following commands instead:
+
+\begin{verbatim}
+C> mkdir \barren
+C> copy a:\*.* \barren
+\end{verbatim}
+
+\noindent
+Once installed, you can put the original disk away in a safe place and run the game.
+
+
+% Section heading: Starting the Game
+\section{Starting the Game}
+
+\noindent
+If you installed your game to a floppy disk, insert the disk into your disk drive (assumed in this example to be {\bf a:}), and type the following command:
+
+\begin{verbatim}
+A> barren
+\end{verbatim}
+
+\noindent
+If you installed the game to your hard disk, then you need to use the following commands instead (this example assumes that you installed to {\bf c:{\textbackslash}barren} as above):
+
+\begin{verbatim}
+C> cd \barren
+C> barren
+\end{verbatim}
+
+\noindent
+You will then see the {\it Cyningstan} logo and the game will start.
+
+{\it Barren Planet} chooses what is hoped to be an attractive colour palette for the graphics. Some monitors might not display this palette as well as intended. If this is the case with your monitor, then you have two options. Firstly, you can play with the standard CGA palette of black, cyan, magenta and white by running the game with the {\bf -p} option as follows:
+
+\begin{verbatim}
+A> barren -p
+\end{verbatim}
+
+\noindent
+Alternatively, you can run the game in monochrome mode. This is obviously a good idea of you have a monochrome display, and can be done with the {\bf -m} option as follows:
+
+\begin{verbatim}
+A> barren -m
+\end{verbatim}
+
+{\bf \it Barren Planet} plays music when it starts, and plays sound effects throughout the game. If these offend you, or you are playing in an environment where sound would be unwelcome, then you can use the {\bf -q} option as follows:
+
+\begin{verbatim}
+A> barren -q
+\end{verbatim}
+
+\noindent
+This option can be combined with {\bf -p} or {\bf -m} as described above. To get the maximum enjoyment out of the game, though, it is recommended to run it without any of these options and experience the game as it was intended.
