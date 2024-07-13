@@ -1,0 +1,113 @@
+CYNINGSTAN WARGAME ENGINE
+
+        CWG, or the Cyningstan Wargame Engine, is a library that
+        controls the battle section of a war game. It is designed for
+        building turn-based strategy games around it, games that
+        involve units moving around a battlefield and firing at one
+        another till the battle is won.
+
+        The engine does not concern itself with graphics or other
+        visuals. These are left to the host game. Neither does it
+        concern itself with action at the strategic level (the
+        gathering of resources, the conquering of regions,
+        diplomacy). These are also left to the host game.
+
+        What it does is provide data structures to store the
+        battlefield, its terrain and units, provides rules for
+        resolution of movement and combat.
+
+        CWG is split into the following modules:
+        - Unit Types
+        - Units
+        - Terrain
+        - Battle
+        - Map
+
+The Basic Modules
+
+        The Unit Type module provides the attributes and methods for
+        handling a unit type in the game. These are adequately
+        documented in the header file.
+
+        The Unit module provides the attributes and methods for
+        handling individual units in the game. These are adequately
+        documented in the header file.
+
+        The Terrain module provides the attributes and methods for handling a
+        terrain type. These are adequately documented in the header
+        file.
+
+        The Map module provides the attributes and methods for
+        handling the battle map. These are adequately documented in
+        the header file.
+
+The Battle Module
+
+        This provides the attributes and methods for handling a
+        battle. The header file provides documentation for the
+        attributes and methods, but an overview here would be useful.
+
+        The attributes record the player who started the battle, the
+        number of resource points each side has for building and
+        repair, a list of units that can be built in the battle, an
+        array of unit types, an array of terrain types, an array of
+        units, and the battle map.
+
+        The list of unit types that can be built in the battle overall
+        overrides the lists of units that can be built by any
+        individual unit type involved. So if a unit can build tanks,
+        but the battle disallows the building of tanks, then tanks
+        cannot be built. This allows a host game with a series of
+        battles to have more control over when certain unit types are
+        introduced into the game.
+
+        The methods offer the same functionality as other modules
+        (create, destroy, clone, read and write). But there are other
+        methods that control the battle as it ensues.
+
+        Move, attack, create and restore attempt to move a unit,
+        attack another, create (build or summon) a new unit on the
+        battlefield, or restore (repair or heal) a damaged unit
+        according to the game rules.
+
+        Victory checks for victory according to the game rules; if one
+        side has occupied all available victory points, or annihilated
+        the enemy, then it is declared the winner of the battle.
+
+        Turn ends a turn. It resets all the units' movement points,
+        updates whose turn it is and other housekeeping functions that
+        need to occur at the end of the turn.
+
+        Setlevel and Setmovement configure how the turn will be
+        processed. Setlevel allows different levels of difficulty for
+        the current player, allowing the provision of computer
+        oppononents with better gunnery than standard (a cheap and
+        easy way of implementing difficulty levels).
+
+        Setmovement determines whether the pathfinding for units is
+        fast or intelligent. It is suggested to it is set to Fast on a
+        human player's turn, and Intelligent on a computer player's
+        turn. Intelligent movement often has a noticeable delay
+        between telling a unit to move and the determination of a
+        suitable path, but can find its way around any obstacle.
+
+The Unused Modules
+
+	The Computer Module was intended to provide a computer
+	player. At the time of writing, though, this is currently done
+	by the host game. Future versions of CWG might include the
+	computer player.
+
+        The Player Module was likewise intended to provide an
+        interface for the human player. This is currently done by the
+        host game, and CWG is unlikely to take over this
+        role. However, helper functions for human player routines
+        might be added in future (such as handling battle reports).
+
+The Main CWG Module
+
+        This module holds the others together. It provides attributes
+        common to the other modules, like file I/O and debugging. Its
+        header provides constants that determine limits: the number of
+        unit types, terrain types, and units in a battle, and the
+        maximum length of strings.

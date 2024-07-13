@@ -1,0 +1,67 @@
+# ======================================================================
+# LOGLIB
+# A small library for logging debug information in C projects.
+# Copyright (C) Damian Gareth Walker 2022
+# 
+# Makefile for OpenWatcom C Compiler
+#
+
+# Don't prompt for deleting after errors.
+.ERASE
+
+# Paths and extensions
+SRCDIR = src
+INCDIR = inc
+DOCDIR = doc
+OBJDIR = obj
+LIBDIR = lib
+BINDIR = bin
+
+# Tools
+CC = wcc
+AR = wlib
+LD = wcl
+
+# Compiler flags
+CCOPTS = -q -0 -W4 -ml -I=$(INCDIR)
+LDOPTS = -q
+
+#
+# Everything
+#
+
+# All targets
+all: $(BINDIR)/logtest.exe
+
+#
+# Binaries
+#
+
+# Test Program
+$(BINDIR)/logtest.exe: $(OBJDIR)/logtest.obj $(LIBDIR)/loglib.lib
+	*$(LD) $(LDOPTS) -fe=$@ $<
+
+#
+# Libraries
+#
+
+# Main library
+$(LIBDIR)/loglib.lib: &
+	$(OBJDIR)/loglib.obj
+	*$(AR) $(AROPTS) $@ +-$(OBJDIR)/loglib.obj
+
+#
+# Object Files
+#
+
+# The Main Cwg Object
+$(OBJDIR)/loglib.obj: &
+	$(SRCDIR)/loglib.c &
+	$(INCDIR)/loglib.h
+	$(CC) $(CCOPTS) -fo=$@ $[@
+
+# Test Program
+$(OBJDIR)/logtest.obj: &
+	$(SRCDIR)/logtest.c &
+	$(INCDIR)/loglib.h
+	$(CC) $(CCOPTS) -fo=$@ $[@

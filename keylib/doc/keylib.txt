@@ -1,0 +1,267 @@
+Introduction to KEYLIB
+
+    KEYLIB is a quick library for game-oriented keyboard input. It
+    supports the original 83-key keyboard layout fully. It supports the
+    later 101-key keyboard layout through hardware compatibility.
+
+    The library is oriented towards simple game controls. It allows
+    detection of multiple keys held down, including non-ASCII keys
+    like shift and ctrl. It supports rudimentary typing operations,
+    such as entering names or simple numeric inputs, by converting
+    some scan codes to their ASCII values.
+
+Licence
+
+    This library, its associated programs and utilities, and its
+    documentation have been released into the public domain by its
+    author Damian Gareth Walker.
+
+Binary Package Contents
+
+    The KEYLIB binary package for Watcom C contains the following
+    directory structure and files:
+
+    KEYLIB\ is the main directory
+	DEMO.EXE is the demonstration program
+	KEY-MS.LIB is the small model library
+	KEY-MM.LIB is the medium model library
+        KEY-MC.LIB is the compact model library
+        KEY-ML.LIB is the large model library
+        KEY-MH.LIB is the huge model library
+	KEYLIB.H is the header file for building programs with KEYLIB
+
+Source Package Contents
+
+    The KEYLIB source package for Watcom C contains the following
+    directory structure and files:
+
+    keylib\ is the destination directory for binaries and data
+    doc\ is the documentation directory
+        keylib.txt is this document
+    inc\ is the include directory
+        keylib.h is the main header file
+    obj\ is the directory for compiled object files
+    src\ is the source code directory
+        demo.c is the demonstration program source
+	keylib.c is the main library source
+    makefile is the makefile to build the project
+
+Building a Project with KEYLIB
+
+    To use KEYLIB's functions in your project, you need to do the
+    following two things. Firstly, you need to include the "keylib.h"
+    header in your own project's source:
+
+	#include "keylib.h"
+
+    You can copy this header into your project's header directory, but a
+    better idea is to add KEYLIB's include folder to your include path
+    on compilation, like this:
+
+        C:\PROJECT\> wcc project.c -I=\keylib\inc
+
+    This assumes that KEYLIB is installed in a directory called \keylib.
+    The second thing you need to do, when you link your object file into
+    an executable, is to link your object file with the KEY-??.LIB file,
+    where ?? is the memory module that you have chosen for your project:
+    MS (small), MM (medium), MC (compact), ML (large) or MH (huge). So
+    if your project uses the default small model, then you would link it
+    like this:
+
+        C:\PROJECT\> wcl project.obj \keylib\key-ms.lib
+
+Rebuilding KEYLIB
+
+    You might want to rebuild KEYLIB from its sources, particularly if
+    you've made a customised version of it, or of its demonstration
+    program. A makefile is provided to simplify this process. If you
+    unpacked the source files into the \keysrc directory, then you can
+    build the project like this:
+
+        C:\KEYSRC\> wmake
+    
+    This builds the LIB files for all the memory models, and stores them
+    in the \keysrc\keylib directory. It also builds the demonstration
+    program and the utilities against the small model library file, and
+    stores their executables in the \keysrc\keylib directory. It copies
+    the header files into the \keysrc\keylib\inc directory.
+
+    The result of this is that the \keysrc\keylib directory contains all
+    of the files you would expect in the \keylib directory of a binary
+    distribution of KEYLIB.
+
+Summary of Functions
+
+    KeyHandler *new_KeyHandler (void);
+    int key (int scancode);
+    int anykey (void);
+    int ascii (void);
+    int scancode (void);
+    void wait (void);
+    void destroy (void);
+
+new_KeyHandler ()
+
+    Declaration:
+    KeyHandler *new_KeyHandler (void);
+
+    Example:
+    /* initialise and destroy a keyboard handler */
+    KeyHandler *keyhandler;
+    keyhandler = new_KeyHandler ();
+    /* ... do things with keys ... */
+    keyhandler->destroy ();
+
+    This initialises the KEYLIB keyboard handler, and makes all
+    subsequent keyboard events use that instead of the BIOS keyboard
+    handler. Make sure to destroy the BIOS keyboard handler before your
+    program exits (see destroy ()). Failure to do so will render DOS
+    unresponsive.
+
+key ()
+
+    Declaration:
+    int key (int scancode);
+
+    Example:
+    /* await the ENTER key */
+    KeyHandler *keyhandler;
+    keyhandler = new_KeyHandler ();
+    while (! keyhandler->key (KEY_ENTER));
+    keyhandler->destroy ();
+
+    This checks to see if a particular key is pressed, returning 1 if it
+    is pressed and 0 if it is not.  The key is specified by its scan
+    code, rather than its ASCII code, in order that non-ASCII keys like
+    cursor controls or shift keys can be detected too.
+
+anykey ()
+
+    Declaration:
+    int anykey (void);
+
+    Example:
+    /* loop till a key is pressed */
+    KeyHandler *keyhandler;
+    keyhandler = new_KeyHandler ();
+    while (! keyhandler->anykey ());
+    keyhandler->destroy ();
+
+    Returns 1 if any key has been pressed, 0 if not. The keypress is
+    remembered, so multiple calls to anykey () will return 1 until the
+    keypress is forgotten with a call to ascii () or scancode ().
+
+ascii ()
+
+    Declaration:
+    int ascii (void);
+
+    Example:
+    /* print the ASCII character of a key pressed. */
+    KeyHandler *keyhandler;
+    int ch;
+    keyhandler = new_KeyHandler ();
+    ch = keyhandler->ascii ();
+    if (ch >= ' ' && ch <= '~')
+        printf ("%c\n", ch);
+    keyhandler->destroy ();
+
+    Returns the ASCII value of the last key pressed. If no key is
+    pressed, or a non-ASCII key, then 0 is returned. This function
+    assumes a US keyboard layout. The keypress is forgotten after the
+    call to ascii (), so subsequent calls to this function or
+    scancode () will return 0 until another key is pressed. This
+    prevents the same keypress being read twice.
+
+scancode ()
+
+    Declaration:
+    int scancode (void);
+
+    Example:
+    /* print the scancode of a key pressed. */
+    KeyHandler *keyhandler;
+    int c;
+    keyhandler = new_KeyHandler ();
+    c = keyhandler->scancode ();
+    if (c)
+        printf ("[%02x]\n", c);
+    keyhandler->destroy ();
+
+    Returns the scan code of the last key pressed. If no key is pressed,
+    then 0 is returned. This is the function to use to scan for
+    non-ASCII keys such as cursor control or shift keys. The keypress is
+    forgotten after the call to ascii (), so subsequent calls to this
+    function or ascii () will return 0 until another key is
+    pressed. This prevents the same keypress being read twice.
+
+wait ()
+
+    Declaration:
+    void wait (void);
+
+    Example:
+    /* wait for a keypress before continuing. */
+    KeyHandler *keyhandler;
+    keyhandler = new_KeyHandler ();
+    printf ("Press literally any key to continue.\n");
+    keyhandler->wait ();
+    keyhandler->destroy ();
+
+    Waits for a key-down event from any key on the keyboard, including
+    shift keys. This function can be used before the ascii () function to
+    wait for a key during typing operations.
+
+destroy ()
+
+    Declaration:
+    void destroy (void);
+
+    Example:
+    /* initialise and destroy a keyboard handler */
+    KeyHandler *keyhandler;
+    keyhandler = new_KeyHandler ();
+    /* ... do things with keys ... */
+    keyhandler->destroy ();
+
+    Destroys the keyboard handler. All memory taken up by the KeyHandler
+    structure is released, and the keyboard interrupt is restored back
+    to the BIOS keyboard handler.  Failure to destroy the keyboard
+    handler before your program exits will make DOS unresponsive, as DOS
+    relies upon the BIOS keyboard handler to function.
+
+Constants
+
+    The header file contains a full set of constants for the scancodes,
+    all prefixed with "KEY_". The use of constants like KEY_SPACE in
+    place of 0x39 make for more readable code. There is no reason why
+    your own project cannot add synonyms for these keys to reflect their
+    function in your program, e.g.
+
+	#define KEY_UP    0x48
+	#define KEY_DOWN  0x50
+	#define KEY_LEFT  0x4b
+	#define KEY_RIGHT 0x4d
+        #define KEY_FIRE  0x39
+
+The Demonstration Program
+
+    The demonstration program, called DEMO.EXE, allows testing and
+    illustration of KEYLIB's features.
+
+Future Developments
+
+    KEYLIB is distributed in a complete state. But there are some
+    possibilities for future development. Some ideas that might be taken
+    up in future developments are:
+
+      - Direct support for extended keys on 101-key keyboards. This will
+        make it possible, for example, to distinguish between the main
+        and keypad ENTER keys.
+
+      - Support for non-US keyboards. Currently the ascii () function
+        assumes a US keyboard in the codes that it returns.
+
+      - Better handling of control codes in the ascii () function,
+        including non-ASCII control codes like cursor and function
+        keys.

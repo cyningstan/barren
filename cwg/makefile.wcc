@@ -1,0 +1,187 @@
+# ======================================================================
+# CWG: Cyningstan Wargame Engine.
+# An engine for simple turn-based wargames.
+# 
+# Copyright (C) Damian Gareth Walker, 2020.
+# Created: 29-Jul-2020.
+# 
+# Makefile for OpenWatcom C.
+# It is assumed that compilation is under DOS.
+#
+
+# Don't prompt for deleting after errors.
+.ERASE
+
+# Target
+TARGET = cwg
+
+# Paths and extensions
+SRCDIR = src
+INCDIR = inc
+DOCDIR = doc
+OBJDIR = obj
+LIBDIR = lib
+BINDIR = bin
+
+# Tools
+CC = wcc
+AR = wlib
+LD = wcl
+TOUCH = $(BINDIR)\touch
+
+# Compiler flags
+CCOPTS = -q -0 -W4 -ml -i=$(INCDIR) -i=$(LOGINC)
+LDOPTS = -q
+
+# A full list of includes
+HEADERS = &
+	$(INCDIR)/cwg.h &
+	$(INCDIR)/utype.h &
+	$(INCDIR)/terrain.h &
+	$(INCDIR)/map.h &
+	$(INCDIR)/unit.h &
+	$(INCDIR)/battle.h &
+	$(INCDIR)/player.h
+
+#
+# Everything
+#
+
+# All targets
+all : $(BINDIR)/demo.exe $(BINDIR)/touch.exe
+
+#
+# Binaries
+#
+
+# Demo Program
+$(BINDIR)/demo.exe : $(OBJDIR)/demo.obj $(LIBDIR)/cwg.lib
+	*$(LD) $(LDOPTS) -fe=$@ $<
+
+# Touch utility to replace OpenWatcom's broken one.
+$(BINDIR)/touch.exe : $(OBJDIR)/touch.obj
+	*$(LD) $(LDOPTS) -fe=$@ $<
+
+#
+# Libraries
+#
+
+# Main library
+$(LIBDIR)/cwg.lib : &
+	$(OBJDIR)/cwg.obj &
+	$(OBJDIR)/utype.obj &
+	$(OBJDIR)/terrain.obj &
+	$(OBJDIR)/unit.obj &
+	$(OBJDIR)/map.obj &
+	$(OBJDIR)/battle.obj &
+	$(OBJDIR)/player.obj
+	*$(AR) $(AROPTS) $@ &
+		+-$(OBJDIR)/cwg.obj &
+		+-$(OBJDIR)/utype.obj &
+		+-$(OBJDIR)/terrain.obj &
+		+-$(OBJDIR)/unit.obj &
+		+-$(OBJDIR)/map.obj &
+		+-$(OBJDIR)/battle.obj &
+		+-$(OBJDIR)/player.obj
+
+#
+# Object Files
+#
+
+# The Main Cwg Object
+$(OBJDIR)/cwg.obj : &
+	$(SRCDIR)/cwg.c &
+	$(INCDIR)/cwg.h
+	$(CC) $(CCOPTS) -fo=$@ $[@
+
+# Unit Type Module
+$(OBJDIR)/utype.obj : &
+	$(SRCDIR)/utype.c &
+	$(INCDIR)/cwg.h &
+	$(INCDIR)/utype.h
+	$(CC) $(CCOPTS) -fo=$@ $[@
+
+# Terrain Type Module
+$(OBJDIR)/terrain.obj : &
+	$(SRCDIR)/terrain.c &
+	$(INCDIR)/cwg.h &
+	$(INCDIR)/terrain.h
+	$(CC) $(CCOPTS) -fo=$@ $[@
+
+# Unit Module
+$(OBJDIR)/unit.obj : &
+	$(SRCDIR)/unit.c &
+	$(INCDIR)/cwg.h &
+	$(INCDIR)/unit.h
+	$(CC) $(CCOPTS) -fo=$@ $[@
+
+# Map Module
+$(OBJDIR)/map.obj : &
+	$(SRCDIR)/map.c &
+	$(INCDIR)/cwg.h &
+	$(INCDIR)/map.h
+	$(CC) $(CCOPTS) -fo=$@ $[@
+
+# Battle Module
+$(OBJDIR)/battle.obj : &
+	$(SRCDIR)/battle.c &
+	$(INCDIR)/cwg.h &
+	$(INCDIR)/battle.h &
+	$(INCDIR)/utype.h &
+	$(INCDIR)/terrain.h &
+	$(INCDIR)/map.h &
+	$(INCDIR)/unit.h
+	$(CC) $(CCOPTS) -fo=$@ $[@
+
+# Player Module
+$(OBJDIR)/player.obj : &
+	$(SRCDIR)/player.c &
+	$(INCDIR)/cwg.h &
+	$(INCDIR)/player.h &
+	$(INCDIR)/battle.h &
+	$(INCDIR)/utype.h &
+	$(INCDIR)/terrain.h &
+	$(INCDIR)/map.h &
+	$(INCDIR)/unit.h
+	$(CC) $(CCOPTS) -fo=$@ $[@
+
+# Demo Program
+$(OBJDIR)/demo.obj : $(SRCDIR)/demo.c $(INCDIR)/cwg.h
+	$(CC) $(CCOPTS) -fo=$@ $[@
+
+# Touch Utility
+$(OBJDIR)/touch.obj : $(SRCDIR)/touch.c
+	$(CC) $(CCOPTS) -fo=$@ $[@
+
+
+#
+# Header dependencies
+#
+
+# Main CWG header
+$(INCDIR)/cwg.h : &
+	$(BINDIR)/touch.exe &
+	$(INCDIR)/utype.h &
+	$(INCDIR)/terrain.h &
+	$(INCDIR)/map.h &
+	$(INCDIR)/unit.h &
+	$(INCDIR)/battle.h &
+	$(INCDIR)/player.h &
+	$(INCDIR)/computer.h
+	$(TOUCH) $@
+
+# Battle header
+$(INCDIR)/battle.h : &
+	$(BINDIR)/touch.exe &
+	$(INCDIR)/utype.h &
+	$(INCDIR)/terrain.h &
+	$(INCDIR)/map.h &
+	$(INCDIR)./unit.h
+	$(TOUCH) $@
+
+# Player header
+$(INCDIR)/player.h : &
+	$(BINDIR)/touch.exe &
+	$(INCDIR)/unit.h &
+	$(INCDIR)/battle.h
+	$(TOUCH) $@

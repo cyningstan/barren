@@ -6,8 +6,3 @@ test.*
 TEST.*
 *.LOG
 *.CAM
-cwg
-cgalib
-keylib
-spklib
-loglib

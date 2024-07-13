@@ -1,5 +1,5 @@
 # Barren Planet
-Barren Planet is a turn-based strategy game for MS-DOS. It runs on an 8088 machine with CGA graphics. If you just want to play it, you can find the pre-built binary package at http://dos.cyningstan.org.uk/downloads/129/team-droid.
+Barren Planet is a turn-based strategy game for MS-DOS. It runs on an 8088 machine with CGA graphics. If you just want to play it, you can find the pre-built binary package at http://dos.cyningstan.org.uk/downloads/7/barren-planet.
 # Building Requirements
 To build the project, you will need the following:
 * A DOS environment (MS-DOS, DOSBox).

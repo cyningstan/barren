@@ -1,0 +1,65 @@
+# ======================================================================
+# LOGLIB
+# A small library for logging debug information in C projects.
+# Copyright (C) Damian Gareth Walker 2022
+# 
+# Makefile for GNU C Compiler
+#
+
+# Paths and extensions
+SRCDIR := src
+INCDIR := inc
+DOCDIR := doc
+OBJDIR := obj
+LIBDIR := lib
+BINDIR := bin
+INSTALLDIR := /usr/local
+
+# Tools
+CC := gcc
+AR := ar
+LD := gcc
+
+# Compiler flags
+CCOPTS := -g -Wall -I$(INCDIR) -I/usr/local/include -c
+AROPTS := rcs
+
+#
+# Everything
+#
+
+# All targets
+all: $(BINDIR)/logtest
+
+#
+# Binaries
+#
+
+# Test Program
+$(BINDIR)/logtest: $(OBJDIR)/logtest.o $(LIBDIR)/libloglib.a
+	$(LD) $(OBJDIR)/logtest.o -L./$(LIBDIR) -lloglib -o $@
+
+#
+# Libraries
+#
+
+# Main library
+$(LIBDIR)/libloglib.a: \
+	$(OBJDIR)/loglib.o
+	$(AR) $(AROPTS) $@ $(OBJDIR)/loglib.o
+
+#
+# Object Files
+#
+
+# The Main Cwg Object
+$(OBJDIR)/loglib.o: \
+	$(SRCDIR)/loglib.c \
+	$(INCDIR)/loglib.h
+	$(CC) $(CCOPTS) -o $@ $<
+
+# Test Program
+$(OBJDIR)/logtest.o: \
+	$(SRCDIR)/logtest.c \
+	$(INCDIR)/loglib.h
+	$(CC) $(CCOPTS) -o $@ $<

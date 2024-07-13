@@ -1,0 +1,6 @@
+*
+!*.txt
+!*.tex
+!*.pdf
+anarchic.pdf
+!.gitignore

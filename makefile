@@ -42,11 +42,6 @@ SPKDIR = spklib
 SPKLIB = spklib\spklib
 SPKINC = spklib\inc
 
-# Paths (LOGLIB)
-LOGDIR = loglib
-LOGLIB = loglib\lib
-LOGINC = loglib\inc
-
 # Tools
 CC = wcc
 LD = wcl
@@ -61,7 +56,7 @@ RM = del
 # Compiler flags
 CCOPTS = -q -0 -w4 -ml -e1 -we -wcd=303 &
 	-i=$(INCDIR) -i=$(CGAINC) -i=$(CWGINC) -i=$(KEYINC) &
-	-i=$(SPKINC) -i=$(LOGINC)
+	-i=$(SPKINC)
 LDOPTS = -q
 
 #
@@ -102,8 +97,7 @@ $(TGTDIR)\barren.exe : &
 	$(OBJDIR)\uidbrief.obj &
 	$(OBJDIR)\uiend.obj &
 	$(OBJDIR)\timer.obj &
-	$(OBJDIR)\ai.obj &
-	$(OBJDIR)\beta.obj
+	$(OBJDIR)\ai.obj
 	*$(LD) $(LDOPTS) -fe=$@ $<
 
 # Asset Generation Binary
@@ -165,6 +159,30 @@ $(BINDIR)\touch.exe : &
 	$(OBJDIR)\touch.obj
 	*$(LD) $(LDOPTS) -fe=$@ $<
 
+# Required libraries: CWG
+$(CWGLIB)\cwg.lib :
+	cd cwg
+	wmake -f makefile.wcc
+	cd ..
+
+# Required libraries: CGALIB
+$(CGALIB)\cgalib.lib :
+	cd cgalib
+	wmake MODEL=ml
+	cd ..
+
+# Required libraries: KEYLIB
+$(KEYLIB)\key-ml.lib :
+	cd keylib
+	wmake
+	cd ..
+
+# Required libraries: SPKLIB
+$(SPKLIB)\spk-ml.lib :
+	cd spklib
+	wmake KEYLIB=..\keylib
+	cd ..
+
 #
 # Object Files
 #
@@ -172,7 +190,6 @@ $(BINDIR)\touch.exe : &
 # Main barren module
 $(OBJDIR)\barren.obj : &
 	$(SRCDIR)\barren.c &
-	$(INCDIR)\beta.h &
 	$(INCDIR)\barren.h &
 	$(INCDIR)\display.h &
 	$(INCDIR)\controls.h &
@@ -180,12 +197,6 @@ $(OBJDIR)\barren.obj : &
 	$(INCDIR)\config.h &
 	$(INCDIR)\uiscreen.h &
 	$(INCDIR)\game.h
-	*$(CC) $(CCOPTS) -fo=$@ $[@
-
-# Beta Test Hander Module
-$(OBJDIR)\beta.obj: &
-	$(SRCDIR)\beta.c &
-	$(INCDIR)\fatal.h
 	*$(CC) $(CCOPTS) -fo=$@ $[@
 
 # Display module

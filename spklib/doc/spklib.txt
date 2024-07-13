@@ -1,0 +1,444 @@
+Introduction to SPKLIB
+
+    SPKLIB is a quick library for game-oriented sound. It supports the
+    PC internal speaker; there is no support for sound cards.
+
+    The library has two distinct functions. It can play music, using
+    short staccato notes either alone, or together in arpeggios to
+    allow some harmony. It can also play sound effects, using a few
+    preset effects whose pitch, duration and other characteristics can
+    be modified to produce a variety of sounds.
+
+Licence
+
+    This library, its associated programs and utilities, and its
+    documentation have been released into the public domain by its
+    author Damian Gareth Walker.
+
+Binary Package Contents
+
+    The SPKLIB binary package for Watcom C contains the following
+    directory structure and files:
+
+    SPKLIB\ is the main directory
+	DEMO.EXE is the music demonstration program
+	DEMO.TUN in the tune file for the music demonstration
+	MAKETUNE.EXE makes a TUN file from text input
+	FXDEMO.EXE is the sound effects demonstration program
+	SPK-MS.LIB is the small model library
+	SPK-MM.LIB is the medium model library
+        SPK-MC.LIB is the compact model library
+        SPK-ML.LIB is the large model library
+        SPK-MH.LIB is the huge model library
+	SPEAKER.H is the main header for building programs with SPKLIB
+	TUNE.H is the header for music
+	EFFECT.H is the header for sound effects
+
+Source Package Contents
+
+    The SPKLIB source package for Watcom C contains the following
+    directory structure and files:
+
+    spklib\ is the destination directory for binaries and data
+    doc\ is the documentation directory
+        spklib.txt is this document
+    inc\ is the include directory
+        speaker.h is the main header file
+	tune.h is the music header file
+	effect.h is the sound effect header file
+    obj\ is the directory for compiled object files
+    src\ is the source code directory
+        demo.c is the music demonstration program source
+	fxdemo.c is the effects demonstration program source
+	maketune.c is the tune creation program source
+	speaker.c is the main library
+	tune.c is the music library
+	effect.c is the sound effect library
+    makefile is the makefile to build the project
+
+Building a Project with SPKLIB
+
+    To use SPKLIB's functions in your project, you need to do the
+    following two things. Firstly, you need to include the "spklib.h"
+    header in your own project's source:
+
+	#include "speaker.h"
+
+    You can copy this header into your project's header directory, but a
+    better idea is to add SPKLIB's include folder to your include path
+    on compilation, like this:
+
+        C:\PROJECT\> wcc project.c -I=\spklib\inc
+
+    This assumes that SPKLIB is installed in a directory called \spklib.
+    The second thing you need to do, when you link your object file into
+    an executable, is to link your object file with the SPK-??.LIB file,
+    where ?? is the memory module that you have chosen for your project:
+    MS (small), MM (medium), MC (compact), ML (large) or MH (huge). So
+    if your project uses the default small model, then you would link it
+    like this:
+
+        C:\PROJECT\> wcl project.obj \spklib\spklib.lib
+
+Rebuilding SPKLIB
+
+    You might want to rebuild SPKLIB from its sources, particularly if
+    you've made a customised version of it, or of its demonstration
+    program. A makefile is provided to simplify this process. If you
+    unpacked the source files into the \spksrc directory, then you can
+    build the project like this:
+
+        C:\SPKSRC\> wmake
+    
+    This builds the LIB files for the memory model specified in the
+    MODEL variable set in the makefile, and stores it in the
+    \spksrc\spklib directory. If you want to compile for a memory
+    model other than large, change the MODEL setting in the makefile
+    to ms, mc, mm or mh as appropriate.
+
+    Running wmake also builds the demonstration program and the
+    utilities against the library file, and stores their executables
+    in the \spksrc\spklib directory. It copies the header files into
+    the \spksrc\spklib directory.
+
+    The result of this is that the \spksrc\spklib directory contains all
+    of the files you would expect in the \spklib directory of a binary
+    distribution of SPKLIB.
+
+Summary of Functions
+
+    Speaker *get_Speaker (void)
+    void destroy (void)
+    Tune *new_Tune (void)
+    Note *new_Note (void)
+    void add (Tune *tune, Note *note)
+    int read (Tune *tune, FILE *input)
+    int write (Tune *tune, FILE *output)
+    void play (Tune *tune, KeyHandler *keys)
+    void destroy (Tune *tune)
+    Effect *new_Effect (void)
+    int read (Effect *effect, FILE *input)
+    int write (Effect *effect, FILE *output)
+    void play (Effect *effect)
+    void destroy (Effect *effect)
+
+get_Speaker ()
+
+    Declaration:
+    Speaker *get_Speaker (void);
+
+    Example:
+    /* initialise and destroy a speaker object */
+    Speaker *speaker;
+    speaker = get_Speaker ();
+    /* ... do things with the speaker library ... */
+    speaker->destroy ();
+
+    This initialises the main library, if it has not already been
+    initialised, and returns a pointer to it. You would not normally
+    need to initialise it yourself, as it is initialised when needed
+    by the Tune and Note libraries.
+
+destroy ()
+
+    Declaration:
+    void destroy (void);
+
+    Example:
+    /* initialise and destroy a speaker object */
+    Speaker *speaker;
+    speaker = get_Speaker ();
+    /* ... do things with the speaker library ... */
+    speaker->destroy ();
+
+    Destroys the speaker library when it is no longer required. It is
+    safe to call this even if the speaker library has not been
+    initialised, so you should call it if you have created Tune or
+    Effect objects in your program.
+
+new_Tune ()
+
+    Declaration:
+    Tune *new_Tune (void);
+
+    Example:
+    /* initialise and destroy a tune object */
+    Tune *tune;
+    tune = new_Tune ();
+    /* ... manipulate the tune ... */
+    tune->destroy (tune);
+
+    Creates a tune object. The tune object can then be manipulated or
+    played by other methods, and then destroyed when it is no longer
+    needed.
+
+new_Note ()
+
+    Declaration:
+    Note *new_Note (void);
+
+    Example:
+    /* initialise, manipulate, and destroy a note object */
+    Note *note;
+    note = new_Note ();
+    note->pitch = 24;
+    note->duration = 10;
+    note->next = NULL;
+    free (note);
+
+    Creates a new note. The only purpose of a note is to be added to a
+    tune. There are no methods on a note object. So if it is not added
+    to a Tune object, it can be discarded with free (). If it is added
+    to a tune (see add () reference below), it should not be freed
+    this way; it will be destroyed when the tune is destroyed.
+
+    The pitch on a note is an integer that represents the number of
+    semitones above CC (16Hz). Middle C has a value of 24, the D above
+    it is 26.
+
+    The duration is measured in 1/20ths of a second. While a note is
+    always played staccato, the duration specifies how long a delay
+    occurs between the start of this note and the start of the next
+    one. A duration of 0 causes this note to be stacked with the
+    previous one so that an arpeggio is played. Any number of notes
+    can be stacked up to the duration of the first note.
+
+    The next value should always be NULL. It will be changed when the
+    note is added to a tune.
+
+add ()
+
+    Declaration:
+    void add (Tune *tune, Note *note);
+
+    Example:
+    /* add a note object to a tune */
+    Tune *tune;
+    Note *note;
+    /* assume tune and note have been instantiated */
+    note->pitch = 24;
+    note->duration = 10;
+    note->next = NULL;
+    tune->add (tune, note);
+
+    Add a prepared note to a tune. The note object is not cloned, but
+    instead a pointer to it is added to the tune object. This is why
+    notes should not be freed once they have been added to a tune.
+
+read ()
+
+    Declaration:
+    int read (Tune *tune, FILE *input);
+
+    Example:
+    /* load a tune from a file */
+    FILE *input;
+    Tune *tune;
+    int result;
+    /* assume tune is instantiated and input file is open */
+    result = tune->read (tune, input);
+
+    Read data from an already open input file into a tune object,
+    returning 1 if successful or 0 on failure. By reading from an
+    existing file instead of opening a file for you, the read ()
+    function can read multiple tunes (and effects, and graphical data)
+    from a single data file. This allows a game's resources to be
+    compiled into a single file.
+
+write ()
+
+    Declaration:
+    int write (Tune *tune, FILE *output);
+
+    Example:
+    /* save a tune to a file */
+    FILE *output;
+    Tune *tune;
+    int result;
+    /* ... create and manipulate the tune, open the file ... */
+    result = tune->write (tune, output);
+
+    Write a tune object to an already open output file, returning 1 if
+    successful or 0 on failure. By writing to an existing file instead
+    of creating a file for you, the write () function can write
+    multiple tunes (and effects, and graphical data) to a single data
+    file. This allows a game's resources to be compiled into a single
+    file.
+
+play ()
+
+    Declaration:
+    void play (Tune *tune, KeyHandler *keys)
+
+    Example:
+    /* play a tune */
+    Tune *tune;
+    KeyHandler *keys;
+    /* ... create the tune ... */
+    tune->play (tune, keys);
+
+    Plays a tune. Optionally, a key handler can be passed to the
+    player to allow playback to be interrupted or controled by key
+    presses. If no keyboard control is required, NULL can be passed in
+    place of a key handler. If a key interrupts playback, then all the
+    key handler methods are available to check the key that was
+    pressed. See the KEYLIB documentation for more information about
+    key handlers.
+
+destroy ()
+
+    Declaration:
+    void destroy (Tune *tune);
+
+    Example:
+    /* initialise and destroy a tune object */
+    Tune *tune;
+    tune = new_Tune ();
+    /* ... manipulate the tune ... */
+    tune->destroy (tune);
+
+    Destroys a tune object, and all the note objects that were added
+    to it.
+
+new_Effect ()
+
+    Declaration:
+    void new_Effect (Effect *effect)
+
+    Example:
+    /* create and destroy a sound effect */
+    Effect *effect;
+    effect = new_Effect ();
+    /* ... manipulate the sound effect ... */
+    effect->destroy (effect);
+
+    Creates a new sound effect. The attributes of the sound effect may
+    be modified directly and are as follows:
+
+    pattern: one of the preset patterns available:
+    * EFFECT_NOISE: random blips between two frequencies.
+    * EFFECT_FALL: a falling tone between two frequencies.
+    * EFFECT_RISE: a rising tone between two frequencies.
+
+    repetitions: the number of times the effect is repeated when
+    played. For instance, a pew-pew laser fire noise can be created
+    with a falling tone played twice.
+
+    low: the lowest tone of the effect. This figure uses the same
+    scale as the pitch attribute of a note.
+
+    high: the highest tone of the effct. This figure uses the same
+    scale as the pitch attribute of a note.
+
+    duration: the duration of a single repetition of the sound
+    effect, in 1/20ths of a second (or individual beeps).
+
+    pause: the length of a pause after each repetition, in 1/20ths of
+    a second.
+
+read ()
+
+    Declaration:
+    int read (Effect *effect, FILE *input)
+
+    Example:
+    /* load a effect from a file */
+    FILE *input;
+    Effect *effect;
+    int result;
+    /* assume effect is instantiated and input file is open */
+    result = effect->read (effect, input);
+
+    Read data from an already open input file into an effect object,
+    returning 1 if successful or 0 on failure. By reading from an
+    existing file instead of opening a file for you, the read ()
+    function can read multiple effects (and tunes, and graphical data)
+    from a single data file. This allows a game's resources to be
+    compiled into a single file.
+
+write ()
+
+    Declaration:
+    int write (Effect *effect, FILE *output);
+
+    Example:
+    /* save a effect to a file */
+    FILE *output;
+    Effect *effect;
+    int result;
+    /* ... create and manipulate the effect, open the file ... */
+    result = effect->write (effect, output);
+
+    Write a effect object to an already open output file, returning 1
+    if successful or 0 on failure. By writing to an existing file
+    instead of creating a file for you, the write () function can
+    write multiple effects (and tunes, and graphical data) to a single
+    data file. This allows a game's resources to be compiled into a
+    single file.
+
+play ()
+
+    Declaration:
+    void play (Effect *effect);
+
+    Example:
+    /* play a pew-pew noise */
+    Effect *effect;
+    effect->repetitions = 2;
+    effect->low = 0;
+    effect->high = 60;
+    effect->duration = 3;
+    effect->pause = 0;
+    effect->play (effect);
+
+destroy ()
+
+    Declaration:
+    void destroy (Effect *effect);
+
+    Example:
+    /* initialise and destroy a sound effect object */
+    Effect *effect;
+    effect = new_Effect ();
+    /* ... manipulate the effect ... */
+    effect->destroy (effect);
+
+    Destroys a sound effect object.
+
+The Demonstration and Utility Programs
+
+    The music demonstration program, called DEMO.EXE, plays the tune
+    stored in the DEMO.TUN file. This tune, Hall of the Mountain King
+    by Edvard Grieg, illustrates the use of arpeggios of staccato
+    notes to imitate harmony on a single-channel sound device.
+
+    The tune creation program, MAKETUNE.EXE, reads a text file for
+    pairs of pitch/duration figures, each pair on its own line with
+    the numbers separated by a space. It takes these as notes and
+    creates an output file from them. Comments can be placed in the
+    file with a leading # character. The parameters are the input and
+    output files.
+
+    The sound effects demonstration program, called FXDEMO.EXE, allows
+    you to construct a sound effect by entering the various attributes,
+    and will then play the effect. You can manipulate the attributes
+    and play the effect again. This is a good way of experimenting
+    with sound effects for your program.
+
+Future Developments
+
+    SPKLIB is distributed in a complete state. But there are some
+    possibilities for future development. Some ideas that might be
+    taken up in future developments are:
+
+      - A more friendly music construction and playback program,
+        perhaps allowing notes to be entered on a staff or in tracker
+        form.
+
+      - A more friendly sound effect construction program, with the
+        ability to save effects to a file.
+
+      - A greater variety of sound effect patterns.
+
+    There is no plan to support sound cards in the library; it is
+    purely for the internal speaker.

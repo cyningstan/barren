@@ -1,0 +1,6 @@
+*.test
+*.TES
+*.err
+*.ERR
+*~
+loglib

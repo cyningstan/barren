@@ -1,0 +1,183 @@
+# ======================================================================
+# CWG: Cyningstan Wargame Engine.
+# An engine for simple turn-based wargames.
+# 
+# Copyright (C) Damian Gareth Walker, 2020.
+# Created: 29-Jul-2020.
+# 
+# Makefile for OpenWatcom C.
+#
+
+# Target
+TARGET = cwg
+
+# Paths and extensions
+SRCDIR := src
+INCDIR := inc
+DOCDIR := doc
+OBJDIR := obj
+LIBDIR := lib
+BINDIR := bin
+LOGDIR = loglib
+LOGINC = loglib/inc
+LOGLIB = loglib/lib
+INSTALLDIR := /usr/local
+
+# Tools
+CC = gcc
+AR = ar
+LD = gcc
+TOUCH = touch
+
+# Compiler flags
+CCOPTS := -g -Wall -I$(INCDIR) -I$(LOGINC) -I/usr/local/include -c
+AROPTS := rcs
+
+# A full list of includes
+HEADERS := \
+	$(INCDIR)/cwg.h \
+	$(INCDIR)/utype.h \
+	$(INCDIR)/terrain.h \
+	$(INCDIR)/map.h \
+	$(INCDIR)/unit.h \
+	$(INCDIR)/battle.h \
+	$(INCDIR)/player.h
+
+#
+# Everything
+#
+
+# All targets
+all: $(BINDIR)/test $(BINDIR)/demo
+
+#
+# Binaries
+#
+
+# Test Program
+$(BINDIR)/test: $(OBJDIR)/test.o $(LIBDIR)/libcwg.a
+	$(LD) $(OBJDIR)/test.o -L./$(LIBDIR) -lcwg -o $@
+
+# Demo Program
+$(BINDIR)/demo: $(OBJDIR)/demo.o $(LIBDIR)/libcwg.a
+	$(LD) $(OBJDIR)/demo.o -L./$(LIBDIR) -lcwg -o $@
+
+#
+# Libraries
+#
+
+# Main library
+$(LIBDIR)/libcwg.a: \
+	$(OBJDIR)/cwg.o \
+	$(OBJDIR)/utype.o \
+	$(OBJDIR)/terrain.o \
+	$(OBJDIR)/unit.o \
+	$(OBJDIR)/map.o \
+	$(OBJDIR)/battle.o \
+	$(OBJDIR)/player.o
+	$(AR) $(AROPTS) $@ $(OBJDIR)/cwg.o
+	$(AR) $(AROPTS) $@ $(OBJDIR)/utype.o
+	$(AR) $(AROPTS) $@ $(OBJDIR)/terrain.o
+	$(AR) $(AROPTS) $@ $(OBJDIR)/unit.o
+	$(AR) $(AROPTS) $@ $(OBJDIR)/map.o
+	$(AR) $(AROPTS) $@ $(OBJDIR)/battle.o
+	$(AR) $(AROPTS) $@ $(OBJDIR)/player.o
+
+#
+# Object Files
+#
+
+# The Main Cwg Object
+$(OBJDIR)/cwg.o: \
+	$(SRCDIR)/cwg.c \
+	$(INCDIR)/cwg.h
+	$(CC) $(CCOPTS) -o $@ $<
+
+# Unit Types
+$(OBJDIR)/utype.o: \
+	$(SRCDIR)/utype.c \
+	$(INCDIR)/cwg.h \
+	$(INCDIR)/utype.h
+	$(CC) $(CCOPTS) -o $@ $<
+
+
+# Terrain Types
+$(OBJDIR)/terrain.o: \
+	$(SRCDIR)/terrain.c \
+	$(INCDIR)/cwg.h \
+	$(INCDIR)/terrain.h
+	$(CC) $(CCOPTS) -o $@ $<
+
+# Units
+$(OBJDIR)/unit.o: \
+	$(SRCDIR)/unit.c \
+	$(LOGINC)/loglib.h \
+	$(INCDIR)/cwg.h \
+	$(INCDIR)/unit.h
+	$(CC) $(CCOPTS) -o $@ $<
+
+# Map
+$(OBJDIR)/map.o: \
+	$(SRCDIR)/map.c \
+	$(INCDIR)/cwg.h \
+	$(INCDIR)/map.h
+	$(CC) $(CCOPTS) -o $@ $<
+
+# Battle
+$(OBJDIR)/battle.o: \
+	$(SRCDIR)/battle.c \
+	$(INCDIR)/cwg.h \
+	$(INCDIR)/battle.h
+	$(CC) $(CCOPTS) -o $@ $<
+
+# Player
+$(OBJDIR)/player.o: \
+	$(SRCDIR)/player.c \
+	$(INCDIR)/cwg.h \
+	$(INCDIR)/player.h \
+	$(INCDIR)/utype.h \
+	$(INCDIR)/terrain.h \
+	$(INCDIR)/unit.h \
+	$(INCDIR)/map.h
+	$(CC) $(CCOPTS) -o $@ $<
+
+# Test Program
+$(OBJDIR)/test.o: \
+	$(SRCDIR)/test.c \
+	$(HEADERS)
+	$(CC) $(CCOPTS) -o $@ $<
+
+# Demo Program
+$(OBJDIR)/demo.o: \
+	$(SRCDIR)/demo.c \
+	$(HEADERS)
+	$(CC) $(CCOPTS) -o $@ $<
+
+#
+# Header dependencies
+#
+
+# Main CWG header
+$(INCDIR)/cwg.h: \
+	$(INCDIR)/utype.h \
+	$(INCDIR)/terrain.h \
+	$(INCDIR)/map.h \
+	$(INCDIR)/unit.h \
+	$(INCDIR)/battle.h \
+	$(INCDIR)/player.h \
+	$(INCDIR)/computer.h
+	$(TOUCH) $@
+
+# Battle header
+$(INCDIR)/battle.h: \
+	$(INCDIR)/utype.h \
+	$(INCDIR)/terrain.h \
+	$(INCDIR)/map.h \
+	$(INCDIR)/unit.h
+	$(TOUCH) $@
+
+# Player header
+$(INCDIR)/player.h: \
+	$(INCDIR)/unit.h \
+	$(INCDIR)/battle.h
+	$(TOUCH) $@
